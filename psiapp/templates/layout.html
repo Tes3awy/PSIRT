@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        {%- if title -%}
+        <title>{{ title }} - SEE Egypt</title>
+        {%- else -%}
+        <title>PSI - SEE Egypt</title>
+        {%- endif -%}
+        <meta name="description"
+            content="Cisco Product Security Incident Response Team (PSIRT) is a dedicated, global team that manages the receipt, investigation, and public reporting of security vulnerability information that is related to Cisco products and networks." />
+        <meta name="author" content="Osama Abbas" />
+        <meta name="publisher" content="Osama Abbas" />
+        <meta name="robots" content="index, follow, notranslate" />
+        <meta name="target" content="all" />
+        <meta name="audience" content="all" />
+        <meta name="coverage" content="Worldwide" />
+        <meta name="distribution" content="Global" />
+        <meta name="rating" content="safe for kids" />
+        <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.png') }}" type="image/png" />
+        <!-- CSS -->
+        {%- block css -%}{%- endblock css -%}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/cui-standard.min.css') }}" type="text/css" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.min.css') }}" type="text/css" />
+        <!-- JS -->
+        {%- block jshead -%}{% endblock jshead %}
+    </head>
+
+    <body class="cui cui--wide">
+        <!-- Navbar -->
+        {%- include "includes/navbar.html" -%}
+        <main class="content content--alt">
+            <div class="container">
+                <div class="row">
+                    <!-- Sidebar -->
+                    {%- include "includes/sidebar.html" -%}
+                    <div class="col-10 col-lg-9 col-xl-10">
+                        <div class="section">
+                            <div class="container">
+                                {%- with messages = get_flashed_messages(with_categories=true) -%}
+                                {%- if messages -%}
+                                {%- for category, message in messages -%}
+                                <div class="alert alert--{{ category }}">
+                                    {%- if category in ["danger", "warning"] -%}
+                                    <div class="alert__icon icon-warning-outline"></div>
+                                    {%- elif category == "success" -%}
+                                    <div class="alert__icon icon-check-outline"></div>
+                                    {%- else -%}
+                                    <div class="alert__icon icon-info-outline"></div>
+                                    {%- endif -%}
+                                    <div class="alert__message">{{ message|safe }}</div>
+                                    <div class="alert__close"><span class="icon-close"></span></div>
+                                </div>
+                                {%- endfor -%}
+                                {%- endif -%}
+                                {%- endwith -%}
+                                <!-- Content Block -->
+                                {%- block content -%}{%- endblock content -%}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <script src="{{ url_for('static', filename='js/jquery-3.6.3.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/sidebar.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/styleguide.js') }}"></script>
+        {%- block javascript -%}{%- endblock javascript -%}
+    </body>
+
+</html>

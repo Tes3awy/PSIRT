@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{%- block jshead -%}
+<script src="{{ url_for('static', filename='js/scrollreveal.min.js') }}"></script>
+{%- endblock jshead -%}
+
+{%- set search_forms = [
+    ('CVE', 'Get list of advisories by searching a CVE ID', 'cves.cve'), 
+    ('Cisco Bug', 'Get list of advisories by searching a Cisco Bug ID', 'bugs.bug'),
+    ('OS-Version', 'Get list of advisories by searching an OS type &amp; its Version', 'oses.os'), 
+    ('Cisco Products', 'Get list of advisories for a specific Cisco product', 'products.product'), 
+] 
+-%}
+
+{%- block content -%}
+<div class="row">
+    <div class="col-12">
+        <div id="hero" role="banner">
+            <h1 class="h1">PSI</h1>
+            <blockquote class="blockquote blockquote--primary">
+                Using a set of search forms, you can get all information of a
+                CVE by its ID, or even get all CVEs of not only IOS and IOS-XE, both NX-OS and NX-OS in ACI mode,
+                but also ASA, FTD, FMC, and FXOS. You can also search for security advisories for a specific Cisco
+                Product.
+            </blockquote>
+        </div>
+    </div>
+    {% for title, description, uri in search_forms -%}
+    <div class="col-lg-{{- 12 // search_forms|length }} col-md-6 col-sm-12 base-margin-bottom">
+        <div class="panel panel--loose panel--raised">
+            <div class="text-center">
+                <h5 class="h5">{{ title }}</h5>
+                <p>{{ description|safe }}</p>
+                <a href="{{ url_for(uri) }}" class="btn btn--secondary" title="{{ title }}">{{ title }} <span
+                        class="icon-small icon-arrow-right-tail"></span></a>
+            </div>
+        </div>
+    </div>
+    {%- endfor %}
+</div>
+
+{%- endblock content -%}
+
+{%- block javascript -%}
+<script src=" {{ url_for('static', filename='js/scroll.min.js') }}"></script>
+{%- endblock javascript -%}

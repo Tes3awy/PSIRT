@@ -1,0 +1,124 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="base-margin-bottom">
+    <h1 class="h1">What is Cisco PSIRT?</h1>
+    <p class="lead">
+        The
+        <a href="//www.cisco.com/c/dam/en_us/about/doing_business/trust-center/docs/cisco-psirt-infographic.pdf"
+            target="_blank" rel="noopener noreferrer">Cisco Product Security Incident Response Team (Cisco
+            PSIRT)</a>
+        is a <strong>dedicated</strong>, <strong>global</strong> team that manages the receipt, investigation,
+        and public reporting of security vulnerability information that is related to Cisco products and
+        networks. PSIRT investigates vulnerabilities across the entire Cisco product portfolio assigning Common
+        Vulnerabilities and Exposures (CVE) identifiers to internally and externally found vulnerabilities
+        across hundreds of products reflecting Cisco's commitment to transparency and helping customers mitigate
+        risk.
+    </p>
+    <p class="lead">
+        PSIRT investigates all reports, regardless of the Cisco software code version, through the last day of
+        support of a given product. Issues will be prioritized based on the potential severity of the
+        vulnerability and other environmental factors. Ultimately, the resolution of a reported incident may
+        require upgrades to products that are under active support from Cisco.
+    </p>
+    <blockquote class="blockquote blockquote--loose blockquote--tertiary block lead text-italic">
+        Thus, PSI is your friendly Google search engine but for Cisco advisories.
+    </blockquote>
+    <span class="lead">Cisco PSIRT supports the following industry-wide security standards:</span>
+    <ul id="styleguideTabs" class="tabs tabs--centered tabs--embossed base-margin-top overflow-auto">
+        <li id="tabsC-1" class="tab active">
+            <a title="Common Vulnerabilities and Exposures">
+                <div class="tab__heading">CVE</div>
+            </a>
+        </li>
+        <li id="tabsC-2" class="tab">
+            <a title="Common Vulnerability Scoring System">
+                <div class="tab__heading">CVSS</div>
+            </a>
+        </li>
+        <li id="tabsC-3" class="tab">
+            <a title="Common Weakness Enumeration">
+                <div class="tab__heading">CWE</div>
+            </a>
+        </li>
+        <li id="tabsC-4" class="tab">
+            <a title="Common Security Advisory Framework">
+                <div class="tab__heading">CSAF</div>
+            </a>
+        </li>
+        <li id="tabsC-5" class="tab">
+            <a title="Common Vulnerability Reporting Format">
+                <div class="tab__heading">CVRF</div>
+            </a>
+        </li>
+    </ul>
+    <div id="tabsC-content" class="tab-content base-padding-top">
+        <div id="tabsC-1-content" class="tab-pane active">A standard maintained by MITRE that
+            identifies, defines, and catalogs publicly disclosed cybersecurity vulnerabilities. More information
+            at: <a class="link" href="//cve.org" target="_blank" rel="noopener noreferrer"
+                title="CVE">https://cve.org</a>
+            (Old website <a href="//cve.mitre.org/" target="_blank" rel="noopener noreferrer"
+                title="MITRE">https://cve.mitre.org</a>)
+        </div>
+        <div id="tabsC-2-content" class="tab-pane">Common Vulnerability Scoring System (CVSS)
+            provides a way to capture the principal characteristics of a vulnerability and produce a numerical
+            score reflecting its severity. More information at: <a class="link" href="//first.org/cvss" target="_blank"
+                rel="noopener noreferrer" title="CVSS">https://first.org/cvss</a>
+        </div>
+        <div id="tabsC-3-content" class="tab-pane">Common Weakness Enumeration (CWE) is a
+            community-developed list of common software security weaknesses. More information at:
+            <a class="link" href="//cwe.mitre.org" target="_blank" rel="noopener noreferrer"
+                title="CWE">https://cwe.mitre.org</a>
+        </div>
+        <div id="tabsC-4-content" class="tab-pane">Common Security Advisory Framework (CSAF) is a
+            specification for structured machine-readable vulnerability-related advisories and further refine
+            those standards over time. <span class="text-success">CSAF is the new name and replacement for the
+                Common Vulnerability Reporting Framework (CVRF)</span>. More information at: <a class="link"
+                href="//csaf.io" target="_blank" rel="noopener noreferrer" title="CSAF">https://csaf.io</a>
+        </div>
+        <div id="tabsC-5-content" class="tab-pane">Common Vulnerability Reporting Format (CVRF) is
+            an industry standard format for publishing security advisories in machine readable format. CSAF is
+            the
+            industry standard that replaces CVRF. Cisco will support CVRF until December 31, 2023. More
+            information at: <a class="link" href="//www.first.org/newsroom/releases/20210601" target="_blank"
+                rel="noreferrer" title="CVRF">https://www.first.org/newsroom/releases/20210601</a>
+        </div>
+        <hr />
+    </div>
+</div>
+
+<div class="base-margin-bottom">
+    <h2 class="h2">About PSI</h2>
+    <p class="lead">
+        The application takes advantage of the Cisco PSIRT RESTful API to search for CVEs and show all its data
+        and related information from other sites not only to easily identify the CVE and its workaround <em>(if
+            provided)</em>, but also to get all possible solutions at one and centralized place and to stay up
+        to date with any security vulnerability.
+    </p>
+    <p class="lead">PSI is developed using the <a class="link text-link" href="//developer.cisco.com/site/uiux/"
+            target="_blank" rel="noopener noreferrer" title="Cisco UI/UX Kit">Cisco UI/UX Kit</a>
+        that is used to design and develop applications with Cisco User Interface standards to optimize the user
+        experience. Cisco UI Kit is a modern, lightweight, responsive and programmable presentation layer that
+        can be used to style HTML primitive elements.</p>
+    <h3 class="h3">Currently, supported network operating systems are:</h3>
+    <ul>
+        <li>Cisco IOS Software.</li>
+        <li>Cisco IOS XE Software.</li>
+        <li>Cisco NX-OS Software.</li>
+        <li>Cisco NX-OS Software in ACI mode.</li>
+        <li>Cisco Adaptive Security Appliance (ASA) Software.</li>
+        <li>Cisco Firepower Threat Defense (FTD) Software.</li>
+        <li>Cisco Secure Firewall Management Center (FMC) Software.</li>
+        <li>Cisco Firepower eXtensible Operating System (FXOS).</li>
+    </ul>
+</div>
+<div>
+    <h2 class="h2">Developers</h2>
+    <p class="lead">
+        PSI is designed using the <a class="link text-link" href="//developer.cisco.com/site/uiux/" target="_blank"
+            rel="noopener noreferrer" title="Cisco UI/UX">Cisco UI/UX Kit</a> and developed by
+        <a href="mailto:Osama_Mohamed@seegypt.com?subject=PSI%20Web%20App%20Feedback"
+            title="Click to send me a feedback">Osama Abbas</a> from the Datacenter team.
+    </p>
+</div>
+{% endblock content %}

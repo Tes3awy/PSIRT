@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<form method="post" enctype="application/x-www-form-urlencoded" role="form" onsubmit="submitSearchForm();" novalidate>
+    {{ form.csrf_token }}
+    <div class="motion-fade-in motion-delay--250 motion-speed--medium">
+        <h2 class="h2 text-center text-size-48">{{ title }}</h2>
+        <div class="form-group qtr-margin-bottom {% if form.bug_id.errors %}form-group--error{% endif %}">
+            <div class="form-group__text">{{ form.bug_id }}</div>
+        </div>
+        {% if form.bug_id.errors %}
+        <div class="form-group--error">
+            {% for error in form.bug_id.errors %}
+            <p class="text-danger no-margin-bottom"><span class="icon-error"></span> {{ error }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <div class="text-center base-margin-bottom base-margin-top">
+            <button type="submit" class="btn btn--primary" id="search" name="search">
+                <span class="icon-search"></span> Search
+            </button>
+        </div>
+        <p>Examples: <span class="label label--tertiary label--small">CSCwb75093</span> or
+            <span class="label label--tertiary label--small">CSCwc62415</span>
+        </p>
+    </div>
+</form>
+<div class="fixed-bottom opacity-90">
+    <p class="bg-tertiary text-xsmall text-white base-padding">Cisco does not provide bug advisories for
+        thrid-party
+        software products, even if it has a Cisco Bug ID on Bug Search Tools.</p>
+</div>
+{% endblock content %}
+
+{% block javascript %}
+<script src="{{ url_for('static', filename='js/app.min.js') }}"></script>
+{% endblock javascript %}

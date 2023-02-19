@@ -1,0 +1,35 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+# Canonical URI
+Canonical: https://www.cisco.com/.well-known/security.txt
+
+# Cisco PSIRT email address
+Contact: mailto:psirt@cisco.com
+
+# Cisco PSIRT OpenPGP key
+Encryption: https://tools.cisco.com/cscrdr/security/center/files/Cisco_PSIRT_606E96B3.asc
+
+# Cisco's security vulnerability policy
+Policy: https://tools.cisco.com/security/center/resources/security_vulnerability_policy.html
+
+# Cisco's Common Security Advisory Framework (CSAF) publications
+CSAF: https://www.cisco.com/.well-known/csaf/provider-metadata.json
+
+-----BEGIN PGP SIGNATURE-----
+
+iQJEBAEBCAAuFiEEWvyE2LVXn37LASk8B+37LGBulrMFAmMOHN0QHHBzaXJ0QGNp
+c2NvLmNvbQAKCRAH7fssYG6WsxGID/4mgHIaSjR4JyC0jOKr0rgUtItzgHhZX0JE
+BBOGEBRhz51VVypWOm6RcR/sulGPubaiRqhUkQJpKOA8vif9UwjyeZtP89mayhOb
+WGNK4oWVOtdeB4846V2z14nEJIJ6o5TFDt+pnl8qe15tidZW/v42oEnwxm76zh/D
+Ww1ZhIHD8T3Nfrd9/W0T7QPeOpov28I7VD2IKpxDRW0QcF7ild/5sJLnbADVylcH
+mUmT1KRuSp5sV4mwj83M5pSJArFMtJfVTS4QhMtZT8ReDlD98LSXmoVMc27GZSC5
+ERYArZdWIYNigGDNt263+UYDjATnUfNA0iyuMBxBgfBQiyRN1XR1EROdGZhPu+qO
+jyIvkBbQ5vUGgUopBDn5eUvfeVtTxPJB9gR6v1VPlh4e9+922OLFfuNQ9seQxI24
+x5E9IRaNpEbU0mMlMq/JSJrZITSFsfpVjR7CVxs8mv6iPr7FTjRRCztcAFnomB0c
+wP/ow4EhjSzmeoh17TSy6Yv69FIHdCzm5zm+bC56+5PRu3xHCmTFvakAhZKnc9QH
+6715uqepJhNLxhSeMr6AtfazQ5VSKBGTzS+6ls3LkgBhl5ZH4gjfZK854INeXtKe
+US7GTCv7H973RLIxhr2m7zUIVZ/8TqUYJSI/3EeXC0Bd7f90ItwhaYfSnri/zqAg
+hm3TGs3lrA==
+=R7yx
+-----END PGP SIGNATURE-----

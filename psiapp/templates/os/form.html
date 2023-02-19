@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+
+{%- block content -%}
+<form method="post" enctype="application/x-www-form-urlencoded" role="form" onsubmit="submitSearchForm();" novalidate>
+    {{ form.csrf_token }}
+    <div class="motion-fade-in motion-delay--250 motion-speed--medium">
+        <h2 class="h2 text-center text-size-48">OS &mdash; Version</h2>
+        <div class="row">
+            <div class="col-md-6 col-sm-12">
+                <div class="form-group qtr-margin-bottom {% if form.os.errors -%}form-group--error{%- endif -%}">
+                    <div class="form-group__text select {% if form.os.errors -%}form-group--error{%- endif -%}">
+                        {{ form.os.label }}
+                        {{ form.os }}
+                    </div>
+                </div>
+                {%- if form.os.errors -%}
+                <div class="form-group--error">
+                    {%- for error in form.os.errors -%}
+                    <p class="text-danger no-margin-bottom"><span class="icon-error"></span> {{ error }}</p>
+                    {%- endfor -%}
+                </div>
+                {%- endif -%}
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <div class="form-group qtr-margin-bottom {% if form.version.errors -%}form-group--error{%- endif -%}">
+                    <div class="form-group__text {% if form.os.errors -%}form-group--error{%- endif -%}">
+                        {{ form.version.label }}
+                        {{ form.version }}
+                    </div>
+                </div>
+                {%- if form.version.errors -%}
+                <div class="form-group--error">
+                    {%- for error in form.version.errors -%}
+                    <p class="text-danger no-margin-bottom"><span class="icon-error"></span> {{ error }}</p>
+                    {%- endfor -%}
+                </div>
+                {%- endif -%}
+            </div>
+        </div>
+        <div class="text-center base-margin-bottom base-margin-top">
+            <button type="submit" class="btn btn--primary" id="search" name="search">
+                <span class="icon-search"></span> Search
+            </button>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <h2 class="h2">Examples</h2>
+            </div>
+            <div class="col-6">
+                <p class="no-margin-bottom">IOS <span class="label label--tertiary label--small">15.9(3)M2</span></p>
+                <p class="no-margin-bottom">IOS-XE <span class="label label--tertiary label--small">17.3.5</span></p>
+                <p class="no-margin-bottom">NX-OS <span class="label label--tertiary label--small">9.3(10)</span>
+                </p>
+                <p class="no-margin-bottom">NX-OS (in ACI mode) <span
+                        class="label label--tertiary label--small">14.2(7s)</span></p>
+            </div>
+            <div class="col-6">
+                <p class="no-margin-bottom">ASA <span class="label label--tertiary label--small">9.16.1</span>
+                </p>
+                <p class="no-margin-bottom">FTD <span class="label label--tertiary label--small">7.1.0</span>
+                </p>
+                <p class="no-margin-bottom">FMC <span class="label label--tertiary label--small">7.1.0</span>
+                </p>
+                <p class="no-margin-bottom">FXOS <span class="label label--tertiary label--small">2.8.1.164</span></p>
+            </div>
+        </div>
+        <div class="fixed-bottom opacity-90">
+            <p class="bg-tertiary text-xsmall text-white base-padding">Cisco reserves the right to remove
+                End-of-Support releases from the Cisco Software Checker (subsequently reflected in this
+                application)</p>
+        </div>
+    </div>
+</form>
+{%- endblock content -%}
+
+{%- block javascript -%}
+<script src="{{ url_for('static', filename='js/app.min.js') }}"></script>
+{%- endblock javascript -%}

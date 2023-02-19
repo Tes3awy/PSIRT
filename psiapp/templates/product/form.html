@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{%- block css -%}
+<link href="{{ url_for('static', filename='css/select2.min.css') }}" rel="stylesheet" />
+{%- endblock css -%}
+
+{%- block content -%}
+<form method="post" enctype="application/x-www-form-urlencoded" role="form" onsubmit="submitSearchForm();" novalidate>
+    <h2 class="h2 text-center text-size-48">Cisco Products</h2>
+    <p class="text-center text-small text-muted">Some Products might not work until some fixes are done from Cisco's
+        side</p>
+    <div class="form-group qtr-margin-bottom">
+        <div class="form-group__text select">
+            <label for="product">Choose a Product
+                <span data-balloon="{{ form.product.choices|length }} available Cisco products"
+                    data-balloon-pos="right">
+                    <span class="icon-help-outline"></span>
+                </span>
+            </label>
+            {{ form.product }}
+        </div>
+    </div>
+    <div class="text-center base-margin-top">
+        <button type="submit" class="btn btn--primary" id="search" name="search">
+            <span class="icon-search"></span> Search
+        </button>
+    </div>
+    <div class="fixed-bottom opacity-90">
+        <p class="bg-tertiary text-xsmall text-white base-padding">Cisco reserves the right to remove
+            End-of-Support products from the Cisco Products Listing (subsequently reflected in this
+            application)</p>
+    </div>
+</form>
+{%- endblock content -%}
+
+{%- block javascript -%}
+<script src="{{ url_for('static', filename='js/app.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/select2.full.min.js') }}"></script>
+<script type="text/javascript">
+    $(document).ready(function () {$('#product').select2()})
+</script>
+{%- endblock javascript -%}

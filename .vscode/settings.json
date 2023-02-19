@@ -1,0 +1,4 @@
+{
+  "dotenv.enableAutocloaking": false,
+  "python.analysis.typeCheckingMode": "off"
+}

@@ -9,6 +9,16 @@ Cisco PSIRT application takes advantage of the Cisco PSIRT OpenVuln RESTful API 
 
 **This web app is your Google's search engine but for Cisco CVEs.**
 
+# Table of Contents
+
+1. [Features](#features)
+2. [Solution Components](#solution-components)
+3. [Usage](#usage)
+4. [Installation](#installation)
+5. [Screenshots](#screenshots)
+6. [Documentation](#documentation)
+7. [Disclaimer](#disclaimer)
+
 ## Features
 
 - Using a set of search forms, you can get all information of a CVE by its ID, or even get all CVEs of not only IOS and IOS-XE, both NX-OS and NX-OS in ACI mode, but also ASA, FTD, FMC, and FXOS. You can also search for security advisories for a specific Cisco Product _(Partially supported)_ ([See why](https://community.cisco.com/t5/services-discussions/psirt-openvuln-api-pagination-issue/m-p/4760270#M938)).
@@ -130,6 +140,14 @@ def create_app(config_class=ProductionConfig):  # this line
     app = Flask(__name__)
     ...
 ```
+
+## Screenshots
+
+![Home](assets/home.jpg)
+![CVE ID](assets/cve.jpg)
+![Bug ID](assets/bug.jpg)
+![OS-Version](assets/os-version.jpg)
+![Cisco Products](assets/product.jpg)
 
 ## Documentation
 

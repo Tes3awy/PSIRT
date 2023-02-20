@@ -88,7 +88,7 @@ class ProductionConfig(Config):
     DEBUG = False
     RATELIMIT_ENABLED = True
     RATELIMIT_STRATEGY = "fixed-window"
-    RATELIMIT_STORAGE_URI = "mongodb://localhost:27017" # change to Redis or Memcached depending on your choice
+    RATELIMIT_STORAGE_URI = "mongodb://localhost:27017" # Change to Redis or Memcached depending on your choice
     RATELIMIT_KEY_PREFIX = "PSI"
     RATELIMIT_IN_MEMORY_FALLBACK_ENABLED = True
 ```
@@ -120,7 +120,7 @@ Press CTRL+C to quit
 
 6. Open `localhost:8080` in your browser and you are ready to use the application.
 
-7. If deployed in production, change the following line in `__init__.py`
+7. If deployed in production, change the following line in `psiapp/__init__.py`
 
 ```python
 ...
@@ -132,11 +132,11 @@ def create_app(config_class=ProductionConfig):  # this line
 
 ## Documentation
 
-Pointer to reference documentation for this project.
-
 1. [Cisco PSIRT OpenVuln API Documentation](https://developer.cisco.com/docs/psirt/)
 2. [API Reference](https://developer.cisco.com/docs/psirt/#!api-reference)
 3. [PSIRT Knowledge Base](https://devnetsupport.cisco.com/hc/en-us/sections/115002851487-openVuln-API)
+4. [Application Registration](https://developer.cisco.com/docs/support-apis/#!application-registration/application-registration)
+5. [Accessing the Cisco PSIRT openVuln API Using curl](https://community.cisco.com/t5/services-knowledge-base/accessing-the-cisco-psirt-openvuln-api-using-curl/ta-p/3652897)
 
 ## Disclaimer
 

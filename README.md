@@ -67,7 +67,7 @@ $ touch config.py
 
 4. Open `config.py` and paste the following snippet.
 
-> To register a Cisco PSIRT OpenVuln API application on Cisco API Console (for `CLIENT_ID` and `CLIENT_SECRET`), follow a long with this [Cisco Guide](https://developer.cisco.com/docs/support-apis/#!application-registration/exploring-the-api-developer-portal) or this [Cisco Community Guide](https://community.cisco.com/t5/services-knowledge-base/accessing-the-cisco-psirt-openvuln-api-using-curl/ta-p/3652897)
+> To register a Cisco PSIRT OpenVuln API application on Cisco API Console (for `CLIENT_ID` and `CLIENT_SECRET`), follow a long with this [Cisco Guide](https://developer.cisco.com/docs/support-apis/#!application-registration/exploring-the-api-developer-portal) or this [Cisco Community Guide](https://community.cisco.com/t5/services-knowledge-base/accessing-the-cisco-psirt-openvuln-api-using-curl/ta-p/3652897) by Omar Santos.
 
 ```python
 class Config(object):
@@ -86,10 +86,11 @@ class Config(object):
 class ProductionConfig(Config):
     APP_ENV = "production"
     DEBUG = False
+    RATELIMIT_ENABLED = True
     RATELIMIT_STRATEGY = "fixed-window"
     RATELIMIT_STORAGE_URI = "mongodb://localhost:27017" # change to Redis or Memcached depending on your choice
-    RATELIMIT_IN_MEMORY_FALLBACK_ENABLED = True
     RATELIMIT_KEY_PREFIX = "PSI"
+    RATELIMIT_IN_MEMORY_FALLBACK_ENABLED = True
 ```
 
 5. Open terminal and run:

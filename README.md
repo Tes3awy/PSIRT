@@ -22,7 +22,7 @@ Cisco PSIRT application takes advantage of the Cisco PSIRT OpenVuln RESTful API 
 2. [Flask](https://flask.palletsprojects.com/en/2.2.x/)
 3. [Flask-WTF](https://flask-wtf.readthedocs.io/en/1.0.x/) (For forms and server-side validation)
 4. [Flask-Limiter](https://flask-limiter.readthedocs.io/en/stable/) (For Rate-Limiting)
-5. [MongoDB](https://www.mongodb.com/try/download/community) (for storing the Rate Limit in production deployment. `Disabled for development`)
+5. [MongoDB](https://www.mongodb.com/try/download/community) (For storing the Rate Limit in production deployment. `Disabled in development`)
 6. [Requests](https://requests.readthedocs.io/en/latest/) (To send HTTP requests for API endpoints)
 7. [Requests-OAuthlib](https://requests.readthedocs.io/en/latest/community/recommended/#requests-oauthlib) (To do OAuth authentication with Cisco API Console Backend Application)
 

@@ -9,7 +9,7 @@ Cisco PSIRT application takes advantage of the Cisco PSIRT OpenVuln RESTful API 
 
 **This web app is your Google's search engine but for Cisco CVEs.**
 
-# Table of Contents
+## Table of Contents
 
 1. [Features](#features)
 2. [Solution Components](#solution-components)

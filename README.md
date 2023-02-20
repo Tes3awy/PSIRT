@@ -4,15 +4,13 @@
 
 # Cisco PSIRT OpenVuln API Web App
 
----
-
 Cisco PSIRT application takes advantage of the Cisco PSIRT OpenVuln RESTful API to search for CVEs and show all its data and related information from other sites not only to easily identify the CVE and its workarounds (if provided) but also to get all possible solutions at one place and to be up to date with any security vulnerability.
 
 **This web app is your Google's search engine but for Cisco CVEs.**
 
 ## Features
 
-- Using a set of search forms, you can get all information of a CVE by its ID, or even get all CVEs of not only IOS and IOS-XE, both NX-OS and NX-OS in ACI mode, but also ASA, FTD, FMC, and FXOS. You can also search for security advisories for a specific Cisco Product _(Partially supported)_.
+- Using a set of search forms, you can get all information of a CVE by its ID, or even get all CVEs of not only IOS and IOS-XE, both NX-OS and NX-OS in ACI mode, but also ASA, FTD, FMC, and FXOS. You can also search for security advisories for a specific Cisco Product _(Partially supported)_ ([See why](https://community.cisco.com/t5/services-discussions/psirt-openvuln-api-pagination-issue/m-p/4760270#M938)).
 
 - Fully Responsive on mobile devices.
 
@@ -91,7 +89,7 @@ class ProductionConfig(Config):
     RATELIMIT_STRATEGY = "fixed-window"
     RATELIMIT_STORAGE_URI = "mongodb://localhost:27017" # change to Redis or Memcached depending on your choice
     RATELIMIT_IN_MEMORY_FALLBACK_ENABLED = True
-    RATELIMIT_KEY_PREFIX = "PSI
+    RATELIMIT_KEY_PREFIX = "PSI"
 ```
 
 5. Open terminal and run:

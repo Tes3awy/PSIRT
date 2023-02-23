@@ -71,7 +71,7 @@ $ python3 -m pip install wheel
 $ python3 -m pip install -r requirement.txt
 ```
 
-3. create a `config.py` next to `wsgi.py`.
+3. Create a `config.py` next to `wsgi.py`.
 
 ```bash
 $ cd PSIRT
@@ -149,6 +149,7 @@ def create_app(config_class=ProductionConfig):  # this line
 ![CVE ID](assets/cve.jpg)
 ![Bug ID](assets/bug.jpg)
 ![OS-Version](assets/os-version.jpg)
+![IOSXE](assets/iosxe.jpeg)
 ![Cisco Products](assets/product.jpg)
 
 ## Documentation

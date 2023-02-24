@@ -20,6 +20,7 @@ Cisco PSIRT application takes advantage of the Cisco PSIRT OpenVuln RESTful API 
 5. [Screenshots](#screenshots)
 6. [Documentation](#documentation)
 7. [Disclaimer](#disclaimer)
+8. [Use Case](#use-case)
 
 ## Features
 
@@ -159,6 +160,11 @@ def create_app(config_class=ProductionConfig):  # this line
 3. [PSIRT Knowledge Base](https://devnetsupport.cisco.com/hc/en-us/sections/115002851487-openVuln-API)
 4. [Application Registration](https://developer.cisco.com/docs/support-apis/#!application-registration/application-registration)
 5. [Accessing the Cisco PSIRT openVuln API Using curl](https://community.cisco.com/t5/services-knowledge-base/accessing-the-cisco-psirt-openvuln-api-using-curl/ta-p/3652897)
+
+## Use Case
+
+- You are working in an entity where you have to patch vulnerabilites in your Cisco Catalyst/Nexus switches or FTD. You can use `os - version` search form.
+- You get an email from InfoSec to check some CVEs in your environment. You search on Google, but you get a bunch irrelevant results and you don't know which one to open. This application narrows down the results to what exactly is needed with all links related to Cisco.
 
 ## Disclaimer
 

@@ -17,10 +17,11 @@ Cisco PSIRT application takes advantage of the Cisco PSIRT OpenVuln RESTful API 
 2. [Solution Components](#solution-components)
 3. [Usage](#usage)
 4. [Installation](#installation)
-5. [Screenshots](#screenshots)
-6. [Documentation](#documentation)
-7. [Disclaimer](#disclaimer)
-8. [Use Case](#use-case)
+5. [Dockerize](#dockerize)
+6. [Screenshots](#screenshots)
+7. [Documentation](#documentation)
+8. [Disclaimer](#disclaimer)
+9. [Use Case](#use-case)
 
 ## Features
 
@@ -94,16 +95,15 @@ class Config(object):
     APP_ENV = "development"
     DEBUG = True
     TESTING = False
-    RATELIMIT_ENABLED = False
+    RATELIMIT_STORAGE_URI = "memory://"
 
 
 class ProductionConfig(Config):
     APP_ENV = "production"
     DEBUG = False
-    RATELIMIT_ENABLED = True
     RATELIMIT_STRATEGY = "fixed-window"
-    RATELIMIT_STORAGE_URI = "mongodb://localhost:27017" # Change to Redis or Memcached depending on your choice
     RATELIMIT_KEY_PREFIX = "PSI"
+    RATELIMIT_STORAGE_URI = "mongodb://localhost:27017" # Change to Redis or Memcached depending on your choice
     RATELIMIT_IN_MEMORY_FALLBACK_ENABLED = True
 ```
 
@@ -144,6 +144,20 @@ def create_app(config_class=ProductionConfig):  # this line
     ...
 ```
 
+## Dockerize
+
+You can build and run the application in a Docker container
+
+1. Replace `Config` with `ProductionConfig` at line 19 in `psiapp/__init__.py`
+
+```bash
+$ cd PSIRT
+$ docker build --progress=plain --no-cache -t psirtimage:latest .
+$ docker run -d -p 5000:5000 --name psi psirtimage
+```
+
+2. Open `localhost:5000` _(port 5000 this time)_ in your browser and you are ready to use your dockerized application.
+
 ## Screenshots
 
 ![Home](assets/home.jpg)
@@ -164,7 +178,7 @@ def create_app(config_class=ProductionConfig):  # this line
 ## Use Case
 
 - You are working in an entity where you have to patch vulnerabilites in your Cisco Catalyst/Nexus switches or FTD. You can use `os - version` search form.
-- You get an email from InfoSec to check some CVEs in your environment. You search on Google, but you get a bunch irrelevant results and you don't know which one to open. This application narrows down the results to what exactly is needed with all links related to Cisco.
+- You get an email from InfoSec to check some CVEs. You search on Google, but you get a bunch of irrelevant results and you don't know which one to open. This application narrows down the results to what exactly is needed with all links related to Cisco.
 
 ## Disclaimer
 

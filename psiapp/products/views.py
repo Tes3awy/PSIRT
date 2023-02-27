@@ -24,7 +24,7 @@ def product(title="Cisco Products"):
 
 
 # By Cisco Product Search Results Page
-@products_bp.route("/result", methods=["GET"])
+@products_bp.route("", methods=["GET"])
 def results():
     if not request.args.get("product", None, type=str):
         flash("A Cisco product is required!", category="danger")
@@ -32,9 +32,6 @@ def results():
     product = request.args.get("product", type=str)
     pageIndex = request.args.get("pageIndex", 1, type=int)
     pageSize = request.args.get("pageSize", 10, type=int)
-    if "?pageIndex" in product:
-        product, pageIndex = product.split(sep="?")
-        _, pageIndex = pageIndex.split(sep="=")
     uri = f"product?product={product}&pageIndex={pageIndex}&pageSize={pageSize}&productNames=false"
     try:
         res = fetch_data(uri=uri, access_token=session.get("access_token"))

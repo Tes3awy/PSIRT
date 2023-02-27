@@ -20,7 +20,7 @@
     <div class="text-muted">
         {%- if pagination.prev != "NA" -%}
         <a class="text-muted opacity-70 pagination-nav" {% if pagination.prev == "NA" -%}disabled {% else %}
-            href="{{ pagination.prev|replace('/product', '/product/result') }}" {%- endif %} title="Prev">
+            href="{{ pagination.prev }}" {%- endif %} title="Prev">
             <span class="icon-step-prev"></span>
         </a>
         {%- endif -%}
@@ -29,7 +29,7 @@
             advisories ({{ tnp }} pages)</small>
         {%- if pagination.next != "NA" -%}
         <a class="text-muted opacity-70 pagination-nav" {% if pagination.next == "NA" -%}disabled {% else %}
-            href="{{ pagination.next|replace('/product', '/product/result') }}" {%- endif %} title="Next">
+            href="{{ pagination.next }}" {%- endif %} title="Next">
             <span class="icon-step-next"></span>
         </a>
         {%- endif -%}
@@ -210,10 +210,10 @@
 {% if tnp > 1 %}
 <ul class="pagination max-width justify-content-center base-margin-bottom">
     <li {% if pagination.prev == "NA" -%}disabled{%- else -%}class="active" {%- endif -%}>
-        <a href="{{ pagination.prev|replace('/product', '/product/result') }}" title="Prev">Previous</a>
+        <a href="{{ pagination.prev }}" title="Prev">Previous</a>
     </li>
     <li {% if pagination.next == "NA" -%}disabled{%- else -%}class="active" {%- endif -%}>
-        <a href="{{ pagination.next|replace('/product', '/product/result') }}" title="Next">Next</a>
+        <a href="{{ pagination.next }}" title="Next">Next</a>
     </li>
 </ul>
 {% endif %}

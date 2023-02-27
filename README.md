@@ -101,9 +101,9 @@ class Config(object):
 class ProductionConfig(Config):
     APP_ENV = "production"
     DEBUG = False
+    RATELIMIT_STORAGE_URI = "redis://localhost:6379" # Change to MongoDB or Memcached depending on your choice
     RATELIMIT_STRATEGY = "fixed-window"
     RATELIMIT_KEY_PREFIX = "PSI"
-    RATELIMIT_STORAGE_URI = "mongodb://localhost:27017" # Change to Redis or Memcached depending on your choice
     RATELIMIT_IN_MEMORY_FALLBACK_ENABLED = True
 ```
 

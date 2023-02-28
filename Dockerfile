@@ -21,7 +21,7 @@ RUN pip install --upgrade pip setuptools
 RUN pip install --trusted-host pypi.python.org --default-timeout=100 -r requirements.txt
 
 # Install gunicorn and Flask-Limiter with Redis for backend storage
-RUN pip install gunicorn Flask-Limiter[redis]==3.2.0
+RUN pip install gunicorn Flask-Limiter[redis]==3.3.0
 
 # Expose port 5000 for gunicorn
 EXPOSE 5000

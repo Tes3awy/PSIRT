@@ -33,8 +33,8 @@ Cisco PSIRT application takes advantage of the Cisco PSIRT OpenVuln RESTful API 
 
 ### Backend Components
 
-1. [Python 3.9, 3.10, 3.11](https://www.python.org/downloads/)
-2. [Flask](https://flask.palletsprojects.com/en/2.2.x/)
+1. [Python](https://www.python.org/downloads/) (Tested on 3.9, 3.10, 3.11)
+2. [Flask](https://flask.palletsprojects.com/en/2.2.x/) (The web framework)
 3. [Flask-WTF](https://flask-wtf.readthedocs.io/en/1.0.x/) (For forms and server-side validation)
 4. [Flask-Limiter](https://flask-limiter.readthedocs.io/en/stable/) (For Rate-Limiting)
 5. [MongoDB](https://www.mongodb.com/try/download/community) (For storing the Rate Limit in production deployment. `Disabled in development`)
@@ -179,6 +179,7 @@ $ docker run -d -p 5000:5000 --name psi psirtimage
 
 - You are working in an entity where you have to patch vulnerabilites in your Cisco Catalyst/Nexus switches or FTD. You can use `os - version` search form.
 - You get an email from InfoSec to check some CVEs. You search on Google, but you get a bunch of irrelevant results and you don't know which one to open. This application narrows down the results to what exactly is needed with all links related to Cisco.
+- You get an email from a customer with a list of CVEs, who has little to no knowledge about CVEs. You don't want to spend your time searching for these CVEs and they are in a hurry. This application is handy in these situations. You get your job done in a couple of minutes and the customer is satisfied with your swift response.
 
 ## Disclaimer
 

@@ -16,7 +16,6 @@ setup(
         "wheel",
         "Flask",
         "Flask-WTF",
-        "Flask-Limiter[mongodb]",
         "Flask-Compress",
         "Flask-HTMLmin",
         "requests",

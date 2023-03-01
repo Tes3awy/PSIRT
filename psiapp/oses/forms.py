@@ -21,7 +21,7 @@ class OSVersionSearchForm(FlaskForm):
         ],
         validators=[DataRequired()],
         default=["Select an OS"],
-        render_kw={"placeholder": "Select an OS"},
+        render_kw={"placeholder": "Select an OS", "class_": "select"},
     )
     version = StringField(
         label="Version",

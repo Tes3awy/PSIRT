@@ -18,23 +18,7 @@
     </nav>
     <!-- Pagination -->
     {%- if tnp > 1 -%}
-    <div class="text-muted">
-        {%- if pagination.prev != "NA" -%}
-        <a class="text-muted opacity-70 pagination-nav" {% if pagination.prev == "NA" -%}disabled {% else %}
-            href="{{ pagination.prev }}" {%- endif %} title="Prev">
-            <span class="icon-step-prev"></span>
-        </a>
-        {%- endif -%}
-        <small class="text-muted opacity-70 qtr-margin-left qtr-padding-right">Showing {{ start }} &mdash; {{ end }}
-            of total {{ total_count }}
-            advisories ({{ tnp }} pages)</small>
-        {%- if pagination.next != "NA" -%}
-        <a class="text-muted opacity-70 pagination-nav" {% if pagination.next == "NA" -%}disabled {% else %}
-            href="{{ pagination.next }}" {%- endif %} title="Next">
-            <span class="icon-step-next"></span>
-        </a>
-        {%- endif -%}
-    </div>
+    {{ render_pagination(pagination, start, end, total_count) }}
     {%- endif -%}
 </div>
 
@@ -245,14 +229,7 @@
 {%- endfor -%}
 
 {% if tnp > 1 %}
-<ul class="pagination max-width justify-content-center base-margin-bottom">
-    <li {% if pagination.prev == "NA" -%}disabled{%- else -%}class="active" {%- endif -%}>
-        <a href="{{ pagination.prev }}" title="Prev">Previous</a>
-    </li>
-    <li {% if pagination.next == "NA" -%}disabled{%- else -%}class="active" {%- endif -%}>
-        <a href="{{ pagination.next }}" title="Next">Next</a>
-    </li>
-</ul>
+{{ render_next_prev(pagination) }}
 {% endif %}
 
 {% include "includes/legal_disclaimer.html" %}

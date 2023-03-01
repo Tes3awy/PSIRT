@@ -6,9 +6,9 @@
     <div class="motion-fade-in motion-delay--250 motion-speed--medium">
         <h2 class="h2 text-center text-size-48">OS &mdash; Version</h2>
         <div class="row">
-            <div class="col-md-6 col-sm-12">
-                <div class="form-group qtr-margin-bottom {% if form.os.errors -%}form-group--error{%- endif -%}">
-                    <div class="form-group__text select {% if form.os.errors -%}form-group--error{%- endif -%}">
+            <div class="col-md-6 col-sm-12 half-margin-bottom">
+                <div class="form-group {% if form.os.errors -%}form-group--error{%- endif -%}">
+                    <div class="form-group__text {% if form.os.errors -%}form-group--error{%- endif -%}">
                         {{ form.os.label }}
                         {{ form.os }}
                     </div>
@@ -21,8 +21,8 @@
                 </div>
                 {%- endif -%}
             </div>
-            <div class="col-md-6 col-sm-12">
-                <div class="form-group qtr-margin-bottom {% if form.version.errors -%}form-group--error{%- endif -%}">
+            <div class="col-md-6 col-sm-12 half-margin-bottom">
+                <div class="form-group {% if form.version.errors -%}form-group--error{%- endif -%}">
                     <div class="form-group__text {% if form.os.errors -%}form-group--error{%- endif -%}">
                         {{ form.version.label }}
                         {{ form.version }}

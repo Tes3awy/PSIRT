@@ -43,10 +43,10 @@ Cisco PSIRT application takes advantage of the Cisco PSIRT OpenVuln RESTful API 
 
 ### Frontend Components
 
-1. [Cisco UI Kit](https://www.cisco.com/web/fw/cisco-ui/2.0.5/dist/css/cui-standard.min.css)
+1. [Cisco UI Kit 2.0.5](https://www.cisco.com/web/fw/cisco-ui/2.0.5/dist/css/cui-standard.min.css)
 2. [jQuery 3.6.3](https://jquery.com/download/)
-3. [ScrollReveal.js](https://scrollrevealjs.org/)
-4. [Select2.js](https://select2.org/)
+3. [ScrollReveal.js 4.0.9](https://scrollrevealjs.org/)
+4. [Select2.js 4.1.0-rc.0](https://select2.org/)
 
 ## Usage
 

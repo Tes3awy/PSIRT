@@ -3,8 +3,8 @@
 {%- block content -%}
 <div class="text-center">
     <span class="icon-warning-outline icon-size-64 text-danger"></span>
-    <h1 class="h1 text-danger base-margin-top">{{ e.code }} &mdash; Internal Server Error</h1>
-    <p class="lead">{{ e.description }}</p>
+    <h1 class="h1 text-danger base-margin-top">{{ error.code }} &mdash; {{ error.name }}</h1>
+    <p class="lead">{{ error.description }}</p>
     <a class="btn btn--ghost" href="{{ url_for('main.index') }}" title="Home">
         <span class="icon-arrow-left-tail"></span> Home
     </a>

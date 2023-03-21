@@ -11,6 +11,10 @@ Cisco PSIRT application takes advantage of the Cisco PSIRT OpenVuln RESTful API 
 
 **This web app is your Google's search engine but for Cisco CVEs.**
 
+# Breaking Changes
+
+On Mar 2, 2023, certain changes were made to the Cisco API console which will make all applications created prior to Mar 1, 2023 deprecated by Sep 30, 2023. More detailed instructions can be found [here](https://github.com/api-at-cisco/Images/blob/master/Whats_New_Doc.pdf).
+
 ## Table of Contents
 
 1. [Features](#features)
@@ -20,8 +24,9 @@ Cisco PSIRT application takes advantage of the Cisco PSIRT OpenVuln RESTful API 
 5. [Dockerize](#dockerize)
 6. [Screenshots](#screenshots)
 7. [Documentation](#documentation)
-8. [Disclaimer](#disclaimer)
-9. [Use Case](#use-case)
+8. [Use Case](#use-case)
+9. [Considerations](#considerations)
+10. [Disclaimer](#disclaimer)
 
 ## Features
 
@@ -37,9 +42,9 @@ Cisco PSIRT application takes advantage of the Cisco PSIRT OpenVuln RESTful API 
 2. [Flask](https://flask.palletsprojects.com/en/2.2.x/) (The web framework)
 3. [Flask-WTF](https://flask-wtf.readthedocs.io/en/1.0.x/) (For forms and server-side validation)
 4. [Flask-Limiter](https://flask-limiter.readthedocs.io/en/stable/) (For Rate-Limiting)
-5. [MongoDB](https://www.mongodb.com/try/download/community) (For storing the Rate Limit in production deployment. `Disabled in development`)
+5. [Redis](https://redis.io/) (For storing the Rate Limit in production deployment. `Disabled in development`)
 6. [Requests](https://requests.readthedocs.io/en/latest/) (To send HTTP requests for API endpoints)
-7. [Requests-OAuthlib](https://requests.readthedocs.io/en/latest/community/recommended/#requests-oauthlib) (To do OAuth authentication with Cisco API Console Backend Application)
+7. [Requests-OAuthlib](https://requests.readthedocs.io/en/latest/community/recommended/#requests-oauthlib) (To perform OAuth2 authentication with Cisco API Console application)
 
 ### Frontend Components
 
@@ -78,23 +83,32 @@ $ python3 -m pip install -r requirement.txt
 ```bash
 $ cd PSIRT
 $ touch config.py
+$ sudo nano config.py
 ```
 
-4. Open `config.py` and paste the following snippet.
+To be able to use PSI, you must register a Cisco API console application to get both `CLIENT_ID` and `CLIENT_SECRET`. And to register a Cisco PSIRT OpenVuln API application on Cisco API Console:
 
-> To register a Cisco PSIRT OpenVuln API application on Cisco API Console (for `CLIENT_ID` and `CLIENT_SECRET`), follow a long with this [Cisco Guide](https://developer.cisco.com/docs/support-apis/#!application-registration/exploring-the-api-developer-portal) or this [Cisco Community Guide](https://community.cisco.com/t5/services-knowledge-base/accessing-the-cisco-psirt-openvuln-api-using-curl/ta-p/3652897) by Omar Santos.
+1. [Register a New App](https://apiconsole.cisco.com/apps/myapps) on Cisco API console.
+2. Provide an Application Name _(Example: Cisco PSIRT Flask App)_
+3. Application Type: `Service`.
+4. Grant Type: `Client Credentials`.
+5. Select APIs: `Cisco PSIRT openVuln API`.
+
+Copy `KEY` and `CLIENT_ID` to `config.py`
+
+4. Paste the following snippet `config.py`.
 
 ```python
 class Config(object):
-    BASE_URL = "https://api.cisco.com/security/advisories/v2"  # New URL
-    CLIENT_ID = "<YOUR_CISCO_CLIENT_ID>"  # From https://apiconsole.cisco.com/apps/myapps
-    CLIENT_SECRET = "<YOUR_CISCO_CLIENT_SECRET>"  # From https://apiconsole.cisco.com/apps/myapps
-    # You can run: python -c 'import secrets; print(secrets.token_hex())' twice to get two secret keys for the following secret keys.
-    SECRET_KEY = "<A_SECRET_KEY>"
-    WTF_CSRF_SECRET_KEY = "<A_SECRET_KEY_FOR_WTF_FORMS>"
     APP_ENV = "development"
     DEBUG = True
     TESTING = False
+    BASE_URL = "https://apix.cisco.com/security/advisories/v2"  # New URL
+    CLIENT_ID = "<KEY>"  # Key From https://apiconsole.cisco.com/apps/myapps
+    CLIENT_SECRET = "<YOUR_CISCO_CLIENT_SECRET>"  # CLIENT SECRET From https://apiconsole.cisco.com/apps/myapps
+    # You can run: python -c 'import secrets; print(secrets.token_hex())' twice to get two secret keys for the following secret keys.
+    SECRET_KEY = "<A_SECRET_KEY>"
+    WTF_CSRF_SECRET_KEY = "<A_SECRET_KEY_FOR_WTF_FORMS>"
     RATELIMIT_STORAGE_URI = "memory://"
 
 
@@ -134,7 +148,9 @@ Press CTRL+C to quit
 
 6. Open `localhost:8080` in your browser and you are ready to use the application.
 
-7. If deployed in production, change the following line in `psiapp/__init__.py`
+**To deploy PSI in a production environment**
+
+Change the following line in `psiapp/__init__.py`
 
 ```python
 ...
@@ -153,10 +169,10 @@ You can build and run the application in a Docker container
 ```bash
 $ cd PSIRT
 $ docker build --progress=plain --no-cache -t psirtimage:latest .
-$ docker run -d -p 5000:5000 --name psi psirtimage
+$ docker run -d -p 5000:5000 --name psi psirtimage --rm psirtimage:latest
 ```
 
-2. Open `localhost:5000` _(port 5000 this time)_ in your browser and you are ready to use your dockerized application.
+2. Open `localhost:5000` _(port 5000 this time)_ in your browser and you are ready to use your production-ready dockerized application.
 
 ## Screenshots
 
@@ -171,15 +187,18 @@ $ docker run -d -p 5000:5000 --name psi psirtimage
 
 1. [Cisco PSIRT OpenVuln API Documentation](https://developer.cisco.com/docs/psirt/)
 2. [API Reference](https://developer.cisco.com/docs/psirt/#!api-reference)
-3. [PSIRT Knowledge Base](https://devnetsupport.cisco.com/hc/en-us/sections/115002851487-openVuln-API)
-4. [Application Registration](https://developer.cisco.com/docs/support-apis/#!application-registration/application-registration)
-5. [Accessing the Cisco PSIRT openVuln API Using curl](https://community.cisco.com/t5/services-knowledge-base/accessing-the-cisco-psirt-openvuln-api-using-curl/ta-p/3652897)
+3. [Cisco API Console - What's New](https://github.com/api-at-cisco/Images/blob/master/Whats_New_Doc.pdf)
+4. [PSIRT Knowledge Base](https://devnetsupport.cisco.com/hc/en-us/sections/115002851487-openVuln-API)
 
 ## Use Case
 
-- You are working in an entity where you have to patch vulnerabilites in your Cisco Catalyst/Nexus switches or FTD. You can use `os - version` search form.
-- You get an email from InfoSec to check some CVEs. You search on Google, but you get a bunch of irrelevant results and you don't know which one to open. This application narrows down the results to what exactly is needed with all links related to Cisco.
+- You are working in an organization where you have to patch vulnerabilites in your Cisco Catalyst/Nexus switches or FTD. You can use `os - version` search form.
+- You get an email from InfoSec to check some CVEs. You search on Google, but you get a bunch of irrelevant results and you don't know which one to open. This application narrows down the results to what exactly needed with all links related to Cisco.
 - You get an email from a customer with a list of CVEs, who has little to no knowledge about CVEs. You don't want to spend your time searching for these CVEs and they are in a hurry. This application is handy in these situations. You get your job done in a couple of minutes and the customer is satisfied with your swift response.
+
+## Considerations
+
+Some versions of Python _(such as 3.10.9 or later on Linux)_, may or may not throw an `ssl.SSLError: [SSL: UNSAFE_LEGACY_RENEGOTIATION_DISABLED] unsafe legacy renegotiation disabled (_ssl.c:1131)` error. It's crucial to handle this error in a proper way since it is considered a critical security and audit breaks for a Man-in-the-Middle attack if handled incorrectly.
 
 ## Disclaimer
 

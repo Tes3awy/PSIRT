@@ -11,7 +11,7 @@ main_bp = Blueprint("main", __name__)
 # Home Page
 @main_bp.route("/home", methods=["GET"])
 @main_bp.route("/", methods=["GET"])
-def index(title="Home Page"):
+def index(title="Home"):
     try:
         token = get_token(
             client_id=app.config["CLIENT_ID"], client_secret=app.config["CLIENT_SECRET"]
@@ -30,5 +30,5 @@ def index(title="Home Page"):
 # About Page
 @main_bp.route("/faq", methods=["GET"])
 @main_bp.route("/about", methods=["GET"])
-def about(title="About Page"):
+def about(title="About"):
     return render_template("about.html", title=title)

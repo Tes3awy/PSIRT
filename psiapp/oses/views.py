@@ -4,7 +4,7 @@ from markupsafe import escape
 
 from psiapp import limiter
 from psiapp.oses.forms import OSVersionSearchForm
-from psiapp.utils import fetch_data, get_pagination
+from psiapp.utils import fetch_data, paginate
 
 oses_bp = Blueprint("oses", __name__, url_prefix="/OSType")
 
@@ -62,16 +62,18 @@ def results(os: str):
         return redirect(url_for("oses.os"))
     else:
         advisories = res.json().get("advisories")
-        pagination = get_pagination(
-            paging=res.json().get("paging"), pageIndex=pageIndex
+        paging = paginate(
+            paging=res.json().get("paging"),
+            pageIndex=pageIndex,
+            pageSize=pageSize,
         )
-        total_count = pagination.get("total_count")
-        tnp = pagination.get("tnp")  # total number of pages
-        start = pagination.get("start")
-        end = pagination.get("end")
+        total_count = paging.get("total_count")
+        tnp = paging.get("tnp")  # total number of pages
+        start = paging.get("start")
+        end = paging.get("end")
         pagination = res.json().get("paging")
         flash(
-            f"{pageIndex}/{tnp} - Search results for {os.upper()} {version}",
+            f"{f'Page {pageIndex} of {tnp} - ' if pageIndex != tnp else ''}Search results for {os.upper()} {version}",
             "success",
         )
         return render_template(

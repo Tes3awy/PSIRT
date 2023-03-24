@@ -7,6 +7,7 @@ def get_token(client_id: str, client_secret: str) -> dict[str, str]:
     oauth2 = OAuth2Session(client=client)
     token_url = "https://id.cisco.com/oauth2/default/v1/token"
     return oauth2.fetch_token(
+        method="POST",
         token_url=token_url,
         client_id=client_id,
         client_secret=client_secret,

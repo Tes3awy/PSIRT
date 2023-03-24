@@ -14,7 +14,8 @@ main_bp = Blueprint("main", __name__)
 def index(title="Home"):
     try:
         token = get_token(
-            client_id=app.config["CLIENT_ID"], client_secret=app.config["CLIENT_SECRET"]
+            client_id=app.config.get("CLIENT_ID"),
+            client_secret=app.config.get("CLIENT_SECRET"),
         )
     except requests.exceptions.ConnectionError as e:
         flash("Connection Error! Failed to establish a connection", category="danger")

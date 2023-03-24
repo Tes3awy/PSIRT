@@ -4,17 +4,13 @@
 <form method="post" enctype="application/x-www-form-urlencoded" role="form" onsubmit="submitSearchForm();" novalidate>
     {{ form.csrf_token }}
     <div class="motion-fade-in motion-delay--250 motion-speed--medium">
-        <h2 class="h2 text-center text-size-48 base-margin-top">{{ title }}</h2>
+        <h2 class="h2 text-center text-size-48 base-margin-top base-margin-bottom">{{ title }}</h2>
         <div class="form-group qtr-margin-bottom {% if form.cve_id.errors %}form-group--error{% endif %}">
-            <div class="form-group__text">{{ form.cve_id }}</div>
+            <div class="form-group__text">
+                {{ form.cve_id }}
+            </div>
+            {{ with_errors(form.cve_id) }}
         </div>
-        {% if form.cve_id.errors %}
-        <div class="form-group--error">
-            {% for error in form.cve_id.errors %}
-            <p class="text-danger no-margin-bottom"><span class="icon-error"></span> {{ error }}</p>
-            {% endfor %}
-        </div>
-        {% endif %}
         <div class="text-center base-margin-bottom base-margin-top">
             <button type="submit" class="btn btn--primary" id="search" name="search">
                 <span class="icon-search"></span> Search

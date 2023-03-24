@@ -4,37 +4,25 @@
 <form method="post" enctype="application/x-www-form-urlencoded" role="form" onsubmit="submitSearchForm();" novalidate>
     {{ form.csrf_token }}
     <div class="motion-fade-in motion-delay--250 motion-speed--medium">
-        <h2 class="h2 text-center text-size-48">OS &mdash; Version</h2>
+        <h2 class="h2 text-center text-size-48 base-margin-top base-margin-bottom">OS &mdash; Version</h2>
         <div class="row">
             <div class="col-md-6 col-sm-12 half-margin-bottom">
                 <div class="form-group {% if form.os.errors -%}form-group--error{%- endif -%}">
-                    <div class="form-group__text {% if form.os.errors -%}form-group--error{%- endif -%}">
-                        {{ form.os.label }}
+                    <div class="form-group__text select">
                         {{ form.os }}
+                        {{ form.os.label }}
                     </div>
+                    {{ with_errors(form.os) }}
                 </div>
-                {%- if form.os.errors -%}
-                <div class="form-group--error">
-                    {%- for error in form.os.errors -%}
-                    <p class="text-danger no-margin-bottom"><span class="icon-error"></span> {{ error }}</p>
-                    {%- endfor -%}
-                </div>
-                {%- endif -%}
             </div>
             <div class="col-md-6 col-sm-12 half-margin-bottom">
                 <div class="form-group {% if form.version.errors -%}form-group--error{%- endif -%}">
-                    <div class="form-group__text {% if form.os.errors -%}form-group--error{%- endif -%}">
-                        {{ form.version.label }}
+                    <div class="form-group__text">
                         {{ form.version }}
+                        {{ form.version.label }}
                     </div>
+                    {{ with_errors(form.version) }}
                 </div>
-                {%- if form.version.errors -%}
-                <div class="form-group--error">
-                    {%- for error in form.version.errors -%}
-                    <p class="text-danger no-margin-bottom"><span class="icon-error"></span> {{ error }}</p>
-                    {%- endfor -%}
-                </div>
-                {%- endif -%}
             </div>
         </div>
         <div class="text-center base-margin-bottom base-margin-top">

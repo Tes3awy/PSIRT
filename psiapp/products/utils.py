@@ -2,7 +2,7 @@ import requests
 from flask import flash, redirect, url_for
 
 
-def fetch_products(prodType: str = "CISCO") -> list[dict]:
+def fetch_products(prodType: str = "CISCO") -> list[str]:
     try:
         r = requests.get(
             # https://tools.cisco.com/security/center/productBoxData.x
@@ -16,4 +16,5 @@ def fetch_products(prodType: str = "CISCO") -> list[dict]:
         flash("Failed to fetch the list of Cisco products! Please try again", "danger")
         return redirect(url_for("products.product"))
     else:
-        return r.json().get("Cisco").get("products")
+        products = r.json().get("Cisco").get("products")
+        return [product.get("productName") for product in products]

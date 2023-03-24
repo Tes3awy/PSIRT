@@ -5,7 +5,7 @@ from markupsafe import escape
 from psiapp import limiter
 from psiapp.products.forms import ProductSearchForm
 from psiapp.products.utils import fetch_products
-from psiapp.utils import fetch_data, get_pagination
+from psiapp.utils import fetch_data, paginate
 
 products_bp = Blueprint("products", __name__, url_prefix="/product")
 
@@ -16,7 +16,7 @@ products_bp = Blueprint("products", __name__, url_prefix="/product")
 def product(title="Cisco Products"):
     form = ProductSearchForm()
     products = fetch_products(prodType="CISCO")
-    form.product.choices = [product.get("productName") for product in products]
+    form.product.choices = products
     if form.is_submitted():
         product = escape(request.form.get("product").strip())
         return redirect(url_for("products.results", product=product))
@@ -60,15 +60,18 @@ def results():
         return redirect(url_for("products.product"))
     else:
         advisories = res.json().get("advisories")
-        pagination = get_pagination(
-            paging=res.json().get("paging"), pageIndex=int(pageIndex)
+        paging = paginate(
+            paging=res.json().get("paging"), pageIndex=pageIndex, pageSize=pageSize
         )
-        total_count = pagination.get("total_count")
-        tnp = pagination.get("tnp")  # total number of pages
-        start = pagination.get("start")
-        end = pagination.get("end")
+        total_count = paging.get("total_count")
+        tnp = paging.get("tnp")  # total number of pages
+        start = paging.get("start")
+        end = paging.get("end")
         pagination = res.json().get("paging")
-        flash(f"{pageIndex}/{tnp} - Search results for {product}", "success")
+        flash(
+            f"{f'Page {pageIndex} of {tnp} - ' if pageIndex != tnp else ''}Search results for {product}",
+            "success",
+        )
         return render_template(
             "product/results.html",
             title=f"Search results for {product}",

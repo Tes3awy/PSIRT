@@ -98,6 +98,8 @@ local_settings.py
 instance/
 .webassets-cache
 .flaskenv
+.env
+.env.example
 
 # Scrapy stuff:
 .scrapy
@@ -136,6 +138,17 @@ ENV/
 
 # mkdocs documentation
 /site
+
+# screenshots
+/assets
+
+# misc files and folders
+.vscode
+.sourcery.yaml
+AUTHORS.md
+README.md
+SECURITY.md
+security.txt
 
 # mypy
 .mypy_cache/

@@ -1,4 +1,5 @@
 [![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/Tes3awy/PSIRT)
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/Tes3awy/PSIRT/badge)](https://api.securityscorecards.dev/projects/github.com/Tes3awy/PSIRT)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
 ![Wheel: yes](https://img.shields.io/pypi/wheel/yes)
@@ -198,7 +199,7 @@ $ docker run -d -p 5000:5000 --name psi psirtimage --rm psirtimage:latest
 
 ## Considerations
 
-Some versions of Python _(such as 3.10.9 or later on Linux)_, may or may not throw an `ssl.SSLError: [SSL: UNSAFE_LEGACY_RENEGOTIATION_DISABLED] unsafe legacy renegotiation disabled (_ssl.c:1131)` error. It's crucial to handle this error in a proper way since it is considered a critical security and audit breaks for a Man-in-the-Middle attack if handled incorrectly.
+Some versions of Python _(such as 3.10.9 or later on Linux)_, may; or may not; throw an `ssl.SSLError: [SSL: UNSAFE_LEGACY_RENEGOTIATION_DISABLED] unsafe legacy renegotiation disabled (_ssl.c:1131)` Exception. It's crucial to handle this error in a proper way since it is considered a critical security and audit breaks for a Man-in-the-Middle attack if handled incorrectly.
 
 ## Disclaimer
 

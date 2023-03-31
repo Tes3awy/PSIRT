@@ -1,4 +1,5 @@
 [![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/Tes3awy/PSIRT)
+[![Run in Cisco Cloud IDE](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-runable-icon.svg)](https://developer.cisco.com/devenv/?id=devenv-vscode-base&GITHUB_SOURCE_REPO=https://github.com/Tes3awy/PSIRT)
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/Tes3awy/PSIRT/badge)](https://api.securityscorecards.dev/projects/github.com/Tes3awy/PSIRT)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
@@ -10,11 +11,13 @@
 
 Cisco PSIRT application takes advantage of the Cisco PSIRT OpenVuln RESTful API to search for CVEs and show all its data and related information from other sites not only to easily identify the CVE and its workarounds (if provided) but also to get all possible solutions at one place and to be up to date with any security vulnerability.
 
-**This web app is your Google's search engine but for Cisco CVEs.**
+> **This web app is your Google's search engine but for Cisco CVEs.**
 
 # Breaking Changes
 
 On Mar 2, 2023, certain changes were made to the Cisco API console which will make all applications created prior to Mar 1, 2023 deprecated by Sep 30, 2023. More detailed instructions can be found [here](https://github.com/api-at-cisco/Images/blob/master/Whats_New_Doc.pdf).
+
+> **These changes are already applied to the code in this repo.**
 
 ## Table of Contents
 
@@ -32,6 +35,8 @@ On Mar 2, 2023, certain changes were made to the Cisco API console which will ma
 ## Features
 
 - Using a set of search forms, you can get all information of a CVE by its ID, or even get all CVEs of not only IOS and IOS-XE, both NX-OS and NX-OS in ACI mode, but also ASA, FTD, FMC, and FXOS. You can also search for security advisories for a specific Cisco Product _(Partially supported)_ ([See why](https://community.cisco.com/t5/services-discussions/psirt-openvuln-api-pagination-issue/m-p/4760270#M938)).
+
+- Easy access with no login required. (Might be added later)
 
 - Fully Responsive on mobile devices.
 
@@ -58,12 +63,12 @@ On Mar 2, 2023, certain changes were made to the Cisco API console which will ma
 
 Tested on:
 
-1. Windows 10/11
-2. Ubuntu Jammy 22.0.1
+1. Windows 10/11 Pro
+2. Ubuntu Server - Jammy 22.04.2 LTS
 
 ## Installation
 
-1. Download or clone this repository.
+1. Clone or download.
 
 ```bash
 $ git clone https://github.com/Tes3awy/PSIRT.git
@@ -94,8 +99,9 @@ To be able to use PSI, you must register a Cisco API console application to get 
 3. Application Type: `Service`.
 4. Grant Type: `Client Credentials`.
 5. Select APIs: `Cisco PSIRT openVuln API`.
+6. Agree to the [terms of service](https://apiconsole.cisco.com/apps/tos) and click `Register`.
 
-Copy `KEY` and `CLIENT_ID` to `config.py`
+Copy both `KEY` and `CLIENT_ID` to `config.py`
 
 4. Paste the following snippet `config.py`.
 
@@ -199,7 +205,7 @@ $ docker run -d -p 5000:5000 --name psi psirtimage --rm psirtimage:latest
 
 ## Considerations
 
-Some versions of Python _(such as 3.10.9 or later on Linux)_, may; or may not; throw an `ssl.SSLError: [SSL: UNSAFE_LEGACY_RENEGOTIATION_DISABLED] unsafe legacy renegotiation disabled (_ssl.c:1131)` Exception. It's crucial to handle this error in a proper way since it is considered a critical security and audit breaks for a Man-in-the-Middle attack if handled incorrectly.
+Some versions of Python _(such as 3.10.9 or later on Linux)_, may; or may not; `raise` an `ssl.SSLError: [SSL: UNSAFE_LEGACY_RENEGOTIATION_DISABLED] unsafe legacy renegotiation disabled (_ssl.c:1131)` exception. It's crucial to handle this error in a proper way since it is considered a critical security and audit breaks for a Man-in-the-Middle attack if handled incorrectly.
 
 ## Disclaimer
 

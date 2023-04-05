@@ -9,7 +9,7 @@
 
 ![GIF](assets/psirt.gif)
 
-Cisco PSIRT application takes advantage of the Cisco PSIRT OpenVuln RESTful API to search for CVEs and show all its data and related information from other sites not only to easily identify the CVE and its workarounds (if provided) but also to get all possible solutions at one place and to be up to date with any security vulnerability.
+Cisco PSIRT is a web-based application that takes advantage of the Cisco PSIRT OpenVuln RESTful API to search for CVEs, show all its data, and related information from other sites, not only to easily identify the CVE and its workarounds (if provided) but also to get all possible solutions at one place and to be up to date with any security vulnerability.
 
 > **This web app is your Google's search engine but for Cisco CVEs.**
 
@@ -35,9 +35,8 @@ On Mar 2, 2023, certain changes were made to the Cisco API console which will ma
 ## Features
 
 - Using a set of search forms, you can get all information of a CVE by its ID, or even get all CVEs of not only IOS and IOS-XE, both NX-OS and NX-OS in ACI mode, but also ASA, FTD, FMC, and FXOS. You can also search for security advisories for a specific Cisco Product _(Partially supported)_ ([See why](https://community.cisco.com/t5/services-discussions/psirt-openvuln-api-pagination-issue/m-p/4760270#M938)).
-
 - Easy access with no login required. (Might be added later)
-
+- Cisco Authentic look and feel.
 - Fully Responsive on mobile devices.
 
 ## Solution Components
@@ -183,12 +182,10 @@ $ docker run -d -p 5000:5000 --name psi psirtimage --rm psirtimage:latest
 
 ## Screenshots
 
-![Home](assets/home.jpg)
-![CVE ID](assets/cve.jpg)
-![Bug ID](assets/bug.jpg)
-![OS-Version](assets/os-version.jpg)
-![IOSXE](assets/iosxe.jpeg)
-![Cisco Products](assets/product.jpg)
+|                           |                                      |                                       |
+| :-----------------------: | :----------------------------------: | :-----------------------------------: |
+| ![Home](assets/home.jpg)  |      ![Bug ID](assets/bug.jpg)       |      ![IOSXE](assets/iosxe.jpeg)      |
+| ![CVE ID](assets/cve.jpg) | ![OS-Version](assets/os-version.jpg) | ![Cisco Products](assets/product.jpg) |
 
 ## Documentation
 
@@ -206,6 +203,10 @@ $ docker run -d -p 5000:5000 --name psi psirtimage --rm psirtimage:latest
 ## Considerations
 
 Some versions of Python _(such as 3.10.9 or later on Linux)_, may; or may not; `raise` an `ssl.SSLError: [SSL: UNSAFE_LEGACY_RENEGOTIATION_DISABLED] unsafe legacy renegotiation disabled (_ssl.c:1131)` exception. It's crucial to handle this error in a proper way since it is considered a critical security and audit breaks for a Man-in-the-Middle attack if handled incorrectly.
+
+## Authors
+
+- **Osama Abbas** - [Tes3awy](https://github.com/Tes3awy)
 
 ## Disclaimer
 

@@ -25,45 +25,45 @@ function removeClassWildcard($element, removals) {
 
   return $element;
 }
-function addCards(cnt) {
-  $("main #grid").empty();
-  for (var ii = 1; ii <= cnt; ii++) {
-    $("main #grid").append(
-      '<div class="card"><div class="card__body"><h3 class="text-uppercase base-margin-bottom">Card ' +
-        ii +
-        '</h3><div class="flex"><div class="form-group form-group--inline"><div class="form-group__text"><input id="grid-card-cols" type="number" value="1"><label>Columns</label></div></div><div class="form-group form-group--inline"><div class="form-group__text"><input id="grid-card-rows" type="number" value="1"><label>Rows</label></div></div></div></div>'
-    );
-  }
-  wireCards();
-}
-function wireCards() {
-  $("main #grid .card").click(function () {
-    if ($(this).parent().hasClass("grid--selectable")) {
-      $(this).toggleClass("selected");
-    }
-  });
-  $("main #grid-cards").change(function () {
-    addCards($(this).val());
-  });
-  $("main #grid .card #grid-card-cols").click(function (e) {
-    e.stopPropagation();
-  });
-  $("main #grid .card #grid-card-cols").change(function () {
-    removeClassWildcard($(this).closest(".card"), "card--col-*");
-    $(this)
-      .closest(".card")
-      .addClass("card card--col-" + $(this).val());
-  });
-  $("main #grid .card #grid-card-rows").click(function (e) {
-    e.stopPropagation();
-  });
-  $("main #grid .card #grid-card-rows").change(function () {
-    removeClassWildcard($(this).closest(".card"), "card--row-*");
-    $(this)
-      .closest(".card")
-      .addClass("card card--row-" + $(this).val());
-  });
-}
+// function addCards(cnt) {
+//   $("main #grid").empty();
+//   for (var ii = 1; ii <= cnt; ii++) {
+//     $("main #grid").append(
+//       '<div class="card"><div class="card__body"><h3 class="text-uppercase base-margin-bottom">Card ' +
+//         ii +
+//         '</h3><div class="flex"><div class="form-group form-group--inline"><div class="form-group__text"><input id="grid-card-cols" type="number" value="1"><label>Columns</label></div></div><div class="form-group form-group--inline"><div class="form-group__text"><input id="grid-card-rows" type="number" value="1"><label>Rows</label></div></div></div></div>'
+//     );
+//   }
+//   wireCards();
+// }
+// function wireCards() {
+//   $("main #grid .card").click(function () {
+//     if ($(this).parent().hasClass("grid--selectable")) {
+//       $(this).toggleClass("selected");
+//     }
+//   });
+//   $("main #grid-cards").change(function () {
+//     addCards($(this).val());
+//   });
+//   $("main #grid .card #grid-card-cols").click(function (e) {
+//     e.stopPropagation();
+//   });
+//   $("main #grid .card #grid-card-cols").change(function () {
+//     removeClassWildcard($(this).closest(".card"), "card--col-*");
+//     $(this)
+//       .closest(".card")
+//       .addClass("card card--col-" + $(this).val());
+//   });
+//   $("main #grid .card #grid-card-rows").click(function (e) {
+//     e.stopPropagation();
+//   });
+//   $("main #grid .card #grid-card-rows").change(function () {
+//     removeClassWildcard($(this).closest(".card"), "card--row-*");
+//     $(this)
+//       .closest(".card")
+//       .addClass("card card--row-" + $(this).val());
+//   });
+// }
 function shouldHideSidebar() {
   if ($(window).width() < 768) {
     $("#styleguideSidebar").addClass("sidebar--hidden");
@@ -295,30 +295,30 @@ $(document).ready(function () {
   });
 
   // Wire the Advanced Grid example
-  $("main #grid-group").click(function () {
-    $(this).parent().find("#grid-group").removeClass("selected");
-    var cls = "grid--" + $(this).text();
-    $("main .grid").removeClass("grid--3up");
-    $("main .grid").removeClass("grid--4up");
-    $("main .grid").removeClass("grid--5up");
-    $("main .grid").addClass(cls);
-    $(this).addClass("selected");
-  });
+  // $("main #grid-group").click(function () {
+  //   $(this).parent().find("#grid-group").removeClass("selected");
+  //   var cls = "grid--" + $(this).text();
+  //   $("main .grid").removeClass("grid--3up");
+  //   $("main .grid").removeClass("grid--4up");
+  //   $("main .grid").removeClass("grid--5up");
+  //   $("main .grid").addClass(cls);
+  //   $(this).addClass("selected");
+  // });
 
-  $("main #grid-cards").change(function () {
-    addCards($(this).val());
-  });
+  // $("main #grid-cards").change(function () {
+  //   addCards($(this).val());
+  // });
 
-  $("main #grid-gutters").change(function () {
-    $("main #grid").css("gridGap", $(this).val() + "px");
-  });
+  // $("main #grid-gutters").change(function () {
+  //   $("main #grid").css("gridGap", $(this).val() + "px");
+  // });
 
-  $("main #grid-selectable").change(function () {
-    $("main #grid").toggleClass("grid--selectable");
-    $("main .grid .card").removeClass("selected");
-  });
+  // $("main #grid-selectable").change(function () {
+  //   $("main #grid").toggleClass("grid--selectable");
+  //   $("main .grid .card").removeClass("selected");
+  // });
 
-  addCards(15);
+  // addCards(15);
 
   // Wire the carousel examples
   $("main .carousel__controls a.dot").click(function () {

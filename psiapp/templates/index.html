@@ -5,9 +5,10 @@
 {%- endblock jshead -%}
 
 {%- set search_forms = [
-    ('CVE ID', 'Get list of advisories by searching a CVE ID', 'cves.cve'), 
-    ('Cisco Bug ID', 'Get list of advisories by searching a Cisco Bug ID', 'bugs.bug'),
+    ('CVE ID', 'Get advisory by a CVE ID', 'cves.cve'), 
+    ('Cisco Bug ID', 'Get advisory by a Cisco Bug ID', 'bugs.bug'),
     ('OS-Version', 'Get list of advisories by searching an OS type &amp; its Version', 'oses.os'), 
+    ('Date Range', 'Get list of advisories by a date range sorted by first or last published', 'dates.dates_range'), 
     ('Cisco Products', 'Get list of advisories for a specific Cisco product', 'products.product'), 
 ] 
 -%}
@@ -17,23 +18,24 @@
     <div class="col-12">
         <div id="hero" role="banner">
             <h1 class="h1">PSI</h1>
-            <blockquote class="blockquote blockquote--primary">
-                Using a set of search forms, you can get all information of a
-                CVE by its ID, or even get all CVEs of not only IOS and IOS-XE, both NX-OS and NX-OS in ACI mode,
-                but also ASA, FTD, FMC, and FXOS. You can also search for security advisories for a specific Cisco
-                Product.
+            <blockquote class="lead blockquote blockquote--tertiary">
+                Using a set of search forms, you can get all information of a CVE by its ID, or even get all CVEs of not
+                only IOS and IOS-XE, both NX-OS and NX-OS in ACI mode, but also ASA, FTD, FMC, and FXOS. You can also
+                search for security advisories for a specific Cisco Product.
             </blockquote>
         </div>
     </div>
+</div>
+
+<div class="grid grid--col-md-5 grid--spacing-half" style="grid-template-rows:none;">
     {% for title, description, uri in search_forms -%}
-    <div class="col-lg-{{ 12 // search_forms|length }} col-md-6 col-sm-12 base-margin-bottom">
-        <div class="panel panel--loose panel--raised">
-            <div class="text-center">
-                <h5 class="h5">{{ title }}</h5>
-                <p>{{ description|safe }}</p>
-                <a href="{{ url_for(uri) }}" class="btn btn--secondary" title="{{ title }}">{{ title }} <span
-                        class="icon-small icon-arrow-right-tail"></span></a>
-            </div>
+    <div class="flex flex-column text-white bg-tertiary base-padding" id="panel">
+        <h4 class="h4 text-center">{{ title }}</h4>
+        <p class="half-padding-top half-padding-bottom" style="margin-top:auto;margin-bottom:auto;">{{ description|safe }}</p>
+        <div class="text-center" style="margin-top:auto;">
+            <a href="{{ url_for(uri) }}" class="btn btn--ghost btn--justified text-white"
+                title="{{ title }}">{{ title }} <span class="icon-small icon-right-arrow-closed-outline"></span>
+            </a>
         </div>
     </div>
     {%- endfor %}

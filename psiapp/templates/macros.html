@@ -2,7 +2,8 @@
 <div class="text-muted">
     {%- if pagination.prev != "NA" -%}
     <a class="text-muted opacity-70 pagination-nav" {% if pagination.prev == "NA" -%}disabled {% else %}
-        href="{{ pagination.prev|replace(' ', '+') }}" {%- endif %} title="Prev">
+        href="{{ pagination.prev|replace(' ', '+') }}{% if varargs[0] and varargs[1] %}&startDate={{ varargs[0] }}&endDate={{ varargs[1] }}{% endif %}"
+        {%- endif %} title="Prev">
         <span class="icon-step-prev"></span>
     </a>
     {%- endif -%}
@@ -11,7 +12,8 @@
         advisories ({{ tnp }} pages)</small>
     {%- if pagination.next != "NA" -%}
     <a class="text-muted opacity-70 pagination-nav" {% if pagination.next == "NA" -%}disabled {% else %}
-        href="{{ pagination.next|replace(' ', '+') }}" {%- endif %} title="Next">
+        href="{{ pagination.next|replace(' ', '+') }}{% if varargs[0] and end_date %}&startDate={{ varargs[0] }}&endDate={{ varargs[1] }}{% endif %}"
+        {%- endif %} title="Next">
         <span class="icon-step-next"></span>
     </a>
     {%- endif -%}
@@ -21,10 +23,12 @@
 {% macro render_next_prev(pagination) %}
 <ul class="pagination max-width justify-content-center base-margin-bottom">
     <li {% if pagination.prev == "NA" -%}disabled{%- else -%}class="active" {%- endif -%}>
-        <a href="{{ pagination.prev|replace(' ', '+') }}" title="Prev">Previous</a>
+        <a href="{{ pagination.prev|replace(' ', '+') }}{% if varargs[0] and varargs[1] %}&startDate={{ varargs[0] }}&endDate={{ varargs[1] }}{% endif %}"
+            title="Prev">Previous</a>
     </li>
     <li {% if pagination.next == "NA" -%}disabled{%- else -%}class="active" {%- endif -%}>
-        <a href="{{ pagination.next|replace(' ', '+') }}" title="Next">Next</a>
+        <a href="{{ pagination.next|replace(' ', '+') }}{% if varargs[0] and varargs[1] %}&startDate={{ varargs[0] }}&endDate={{ varargs[1] }}{% endif %}"
+            title="Next">Next</a>
     </li>
 </ul>
 {% endmacro %}

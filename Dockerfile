@@ -1,34 +1,34 @@
 # syntax=docker/dockerfile:1
 
 # Use an official Python runtime as a parent image
-FROM python:slim
+FROM python:slim-buster
 
 # Add non-root user
 RUN addgroup --system psiuser && adduser --system --group psiuser
 
+# Set the user to psiuser
 USER psiuser
 
-# update and installl netcat
-RUN apt-get update && apt-get upgrade -y
+# Set the working directory to /home/psiuser
+WORKDIR /home/psiuser
 
-# Set the working directory to /home/psiapp
-WORKDIR /home/psiapp
+# Copy all files into the container at /home/psiuser
+COPY . /home/psiuser
 
-# Copy all files into the container at /home/psiapp
-COPY . /home/psiapp
+# Add /home/psiuser/.local/bin to environment variables
+ENV PATH=$PATH:/home/psiuser/.local/bin
 
-RUN pip install --no-cache-dir wheel
-RUN pip install --no-cache-dir -r requirements.txt
-RUN pip install --no-cache-dir gunicorn Flask-Limiter[redis]==3.3.0
+# Install libraries
+RUN pip install --user -U pip
+RUN pip install --user --no-cache-dir wheel
+RUN pip install --user --no-cache-dir -r requirements.txt
+RUN pip install --user --no-cache-dir gunicorn Flask-Limiter[redis]==3.3.0
 
-# Expose port 5000 for gunicorn
-EXPOSE 5000/tcp
+# Expose port 80 for gunicorn
+EXPOSE 80/tcp
 
 # Start the application with gunicorn
-ENTRYPOINT [ "gunicorn", "-b", "0.0.0.0:5000", "wsgi:app", "-w" ]
-
-# Easily override workers in: docker run <image_name> <workers>
-CMD [ "5" ]
+CMD [ "gunicorn", "-b", "0.0.0.0:80", "wsgi:app", "-w", "5" ]
 
 # HEALTHCHECK for index page every 5 minutes
-HEALTHCHECK --interval=5m CMD curl -f http://localhost:5000/ || exit 1
+HEALTHCHECK --interval=5m CMD curl -f http://localhost:80/ || exit 1

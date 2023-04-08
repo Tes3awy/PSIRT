@@ -174,11 +174,11 @@ You can build and run the application in a Docker container
 
 ```bash
 $ cd PSIRT
-$ docker build --progress=plain --no-cache -t psirtimage:latest .
-$ docker run -d -p 5000:5000 --name psi psirtimage --rm psirtimage:latest
+$ docker build --progress=plain --no-cache -t psirt:latest .
+$ docker run -d -p 80:80 --name psi psirt
 ```
 
-2. Open `localhost:5000` _(port 5000 this time)_ in your browser and you are ready to use your production-ready dockerized application.
+2. Open `localhost:80` _(port 80 this time which is the default port for HTTP)_ in your browser and you are ready to use your production-ready dockerized application.
 
 ## Screenshots
 

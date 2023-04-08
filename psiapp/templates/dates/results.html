@@ -10,15 +10,14 @@
                 </a>
             </li>
             <li>
-                <a class="link" href="{{ url_for('oses.os') }}" title="OS-Version">OS-Version</a>
+                <a class="link" href="{{ url_for('dates.dates_range') }}" title="Date Range">Date Range</a>
             </li>
-            <li>{{ os|upper }}</li>
-            <li class="active" aria-current="page">{{ version }}</li>
+            <li class="active" aria-current="page">{{ start_date }} - {{ end_date }}</li>
         </ol>
     </nav>
     <!-- Pagination -->
     {%- if tnp > 1 -%}
-    {{ render_pagination(pagination, start, end, total_count) }}
+    {{ render_pagination(pagination, start, end, total_count, start_date, end_date) }}
     {%- endif -%}
 </div>
 
@@ -226,7 +225,7 @@
 {%- endfor -%}
 
 {% if tnp > 1 %}
-{{ render_next_prev(pagination) }}
+{{ render_next_prev(pagination, start_date, end_date) }}
 {% endif %}
 
 {% include "includes/legal_disclaimer.html" %}

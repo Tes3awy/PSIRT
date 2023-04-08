@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{%- block content -%}
+<form method="post" enctype="application/x-www-form-urlencoded" role="form" onsubmit="submitSearchForm();" novalidate>
+    {{ form.csrf_token }}
+    <div class="motion-fade-in motion-delay--250 motion-speed--medium">
+        <h2 class="h2 text-center text-size-48 base-margin-top base-margin-bottom">Date Range</h2>
+        <div class="row">
+            <div class="col-12 flex justify-content-end">
+                <div
+                    class="form-group form-group--inline {% if form.date_sort.errors -%}form-group--error{%- endif -%}">
+                    <div class="form-group__text select">
+                        {{ form.date_sort }}
+                        {{ form.date_sort.label }}
+                    </div>
+                    {{ with_errors(form.date_sort) }}
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12 half-margin-bottom">
+                <div class="form-group {% if form.start_date.errors -%}form-group--error{%- endif -%}">
+                    <div class="form-group__text">
+                        {{ form.start_date }}
+                        {{ form.start_date.label }}
+                    </div>
+                    {{ with_errors(form.start_date) }}
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12 half-margin-bottom">
+                <div class="form-group {% if form.end_date.errors -%}form-group--error{%- endif -%}">
+                    <div class="form-group__text">
+                        {{ form.end_date(max=date.today() - timedelta(days=1)) }}
+                        {{ form.end_date.label }}
+                    </div>
+                    {{ with_errors(form.end_date) }}
+                </div>
+            </div>
+        </div>
+        <div class="text-center base-margin-bottom base-margin-top">
+            <button type="submit" class="btn btn--primary" id="search" name="search">
+                <span class="icon-search"></span> Search
+            </button>
+        </div>
+    </div>
+</form>
+{%- endblock content -%}
+
+{%- block javascript -%}
+<script src="{{ url_for('static', filename='js/app.min.js') }}"></script>
+{%- endblock javascript -%}

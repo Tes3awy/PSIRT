@@ -27,8 +27,7 @@
 <ol>
     {%- for advisory in advisories -%}
     <li class="result-item">
-        <a tabindex="{{ loop.index + 6 }}"
-            href="#{{ advisory.advisoryTitle|lower|replace(' ', '-') }}">{{ advisory.advisoryTitle }}</a>
+        <a tabindex="{{ loop.index + 6 }}" href="#{{ advisory.advisoryId }}">{{ advisory.advisoryTitle }}</a>
     </li>
     {%- endfor -%}
 </ol>
@@ -40,9 +39,7 @@
     <div class="col-md-8 col-sm-12">
         <div class="row">
             <div class="col-12">
-                <h2 class="h2" id="{{advisory.advisoryTitle|lower|replace(' ', '-')}}">
-                    {{ advisory.advisoryTitle }}
-                </h2>
+                <h2 class="h2" id="{{ advisory.advisoryId }}">{{ advisory.advisoryTitle }}</h2>
             </div>
             <div
                 class="col-{%- if advisory.csafUrl == NA and advisory.cvrfUrl == 'NA' -%}12{%- elif advisory.csafUrl == 'NA' or advisory.cvrfUrl == 'NA' -%}7{%- else -%}6{%- endif -%}">

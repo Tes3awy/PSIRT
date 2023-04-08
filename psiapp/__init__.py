@@ -26,6 +26,7 @@ def create_app(config_class=Config):  # Replace with ProductionConfig in Product
 
     from psiapp.bugs.views import bugs_bp
     from psiapp.cves.views import cves_bp
+    from psiapp.dates.views import dates_bp
     from psiapp.errors.handlers import errors_bp
     from psiapp.filters.filters import filters_bp
     from psiapp.main.views import main_bp
@@ -37,6 +38,7 @@ def create_app(config_class=Config):  # Replace with ProductionConfig in Product
 
     app.register_blueprint(bugs_bp)
     app.register_blueprint(cves_bp)
+    app.register_blueprint(dates_bp)
     app.register_blueprint(errors_bp)
     app.register_blueprint(filters_bp)
     app.register_blueprint(main_bp)

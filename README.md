@@ -34,10 +34,13 @@ On Mar 2, 2023, certain changes were made to the Cisco API console which will ma
 
 ## Features
 
-- Using a set of search forms, you can get all information of a CVE by its ID, or even get all CVEs of not only IOS and IOS-XE, both NX-OS and NX-OS in ACI mode, but also ASA, FTD, FMC, and FXOS. You can also search for security advisories for a specific Cisco Product _(Partially supported)_ ([See why](https://community.cisco.com/t5/services-discussions/psirt-openvuln-api-pagination-issue/m-p/4760270#M938)).
-- Easy access with no login required. (Might be added later)
-- Cisco Authentic look and feel.
+- Using a set of search forms, you can get all information of a CVE by its ID, or even get all CVEs of not only IOS and IOS-XE, both NX-OS and NX-OS in ACI mode, but also ASA, FTD, FMC, and FXOS. You can also search for security advisories for a specific Cisco Product.
+- Date range search.
+- Cisco authentic look and feel.
 - Fully Responsive on mobile devices.
+- Extensive error handling.
+- Dockerized application.
+- Easy access with no login required. (Might be added later)
 
 ## Solution Components
 
@@ -54,7 +57,7 @@ On Mar 2, 2023, certain changes were made to the Cisco API console which will ma
 ### Frontend Components
 
 1. [Cisco UI Kit 2.0.5](https://www.cisco.com/web/fw/cisco-ui/2.0.5/dist/css/cui-standard.min.css)
-2. [jQuery 3.6.3](https://jquery.com/download/)
+2. [jQuery 3.6.4](https://jquery.com/download/)
 3. [ScrollReveal.js 4.0.9](https://scrollrevealjs.org/)
 4. [Select2.js 4.1.0-rc.0](https://select2.org/)
 
@@ -137,7 +140,7 @@ $ flask run
 You should get the development webserver up and running:
 
 ```
-$ flask run
+$ flask run -p 8080 -h 0.0.0.0
 
 * Serving Flask app 'run.py'
  * Debug mode: on
@@ -197,6 +200,7 @@ $ docker run -d -p 80:80 --name psi psirt
 ## Use Case
 
 - You are working in an organization where you have to patch vulnerabilites in your Cisco Catalyst/Nexus switches or FTD. You can use `os - version` search form.
+- You want to search for advisories in a specific period of time. You can use `Date Range` search form.
 - You get an email from InfoSec to check some CVEs. You search on Google, but you get a bunch of irrelevant results and you don't know which one to open. This application narrows down the results to what exactly needed with all links related to Cisco.
 - You get an email from a customer with a list of CVEs, who has little to no knowledge about CVEs. You don't want to spend your time searching for these CVEs and they are in a hurry. This application is handy in these situations. You get your job done in a couple of minutes and the customer is satisfied with your swift response.
 

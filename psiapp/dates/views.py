@@ -39,7 +39,6 @@ def results(date_sort: str):
     pageSize = request.args.get("pageSize", 10, int)
     startDate = request.args.get("startDate", None)
     endDate = request.args.get("endDate", None)
-    print(startDate, endDate)
     title = f"Search results from {startDate} to {endDate} (by {date_sort})"
     try:
         res = fetch_data(

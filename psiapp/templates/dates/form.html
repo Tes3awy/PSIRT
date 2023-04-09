@@ -19,7 +19,7 @@
             <div class="col-md-6 col-sm-12 half-margin-bottom">
                 <div class="form-group {% if form.start_date.errors -%}form-group--error{%- endif -%}">
                     <div class="form-group__text">
-                        {{ form.start_date }}
+                        {{ form.start_date(max=date.today() - timedelta(days=1)) }}
                         {{ form.start_date.label }}
                     </div>
                     {{ with_errors(form.start_date) }}

@@ -1,8 +1,8 @@
-from datetime import date, timedelta
+from datetime import date
 
 from flask_wtf import FlaskForm
 from wtforms.fields import DateField, SelectField
-from wtforms.validators import DataRequired, ValidationError
+from wtforms.validators import DataRequired, StopValidation, ValidationError
 
 
 class DateRangeSearchForm(FlaskForm):
@@ -32,6 +32,13 @@ class DateRangeSearchForm(FlaskForm):
     )
 
     def validate_end_date(self, end_date):
+        if self.start_date.data is None:
+            self.start_date.errors = ["You must set start date"]
+            raise StopValidation()
+
+        if end_date.data is None:
+            raise StopValidation("You must set end date")
+
         if self.start_date.data > end_date.data:
             raise ValidationError("End Date must be greater than Start Date")
 

@@ -107,7 +107,7 @@
             </h3>
             <ul>
                 {%- for platform in advisory.productNames -%}
-                <li class="productName hide">{{ platform }}</li>
+                <li class="productName {% if advisory.productNames|length != 1 %}hide{% endif %}">{{ platform }}</li>
                 {%- endfor -%}
             </ul>
             {% if advisory.productNames|length > 10 %}

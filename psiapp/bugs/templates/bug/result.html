@@ -1,0 +1,148 @@
+{% extends "layout.html" %}
+
+{%- block content -%}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li><a class="link" href="{{ url_for('main.index') }}"><span class="icon-home"></span></a></li>
+        <li><a class="link" href="{{ url_for('.bug') }}">Bug</a></li>
+        <li class="active">{{ title }}</li>
+    </ol>
+</nav>
+
+<hr />
+
+{%- for advisory in bug -%}
+<div class="row">
+    <div class="col-md-8 col-12">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="h2">{{ advisory.advisoryTitle }}</h2>
+            </div>
+            <!-- Score -->
+            {% include 'includes/score.html' %}
+            <!-- Machine Readable Formats -->
+            {% include 'includes/mrf.html' %}
+        </div>
+        <div class="base-margin-bottom">
+            <h3 class="h3">Summary</h3>
+            <div class="summary">{{ advisory.summary|safe }}</div>
+
+            <hr />
+
+            <h3 class="h3">Status</h3>
+            <div class="responsive-table">
+                <table class="table table--bordered table--bordered-inner">
+                    <thead>
+                        <tr>
+                            <th scope="col">Version</th>
+                            <th scope="col">First Published</th>
+                            <th scope="col">Last Updated</th>
+                            <th scope="col">Current Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ advisory.version }}</td>
+                            {%- if advisory.firstPublished == advisory.lastUpdated -%}
+                            <td>{{ advisory.firstPublished|fromtimestamp }}</td>
+                            <td>Never</td>
+                            {%- else -%}
+                            <td>{{ advisory.firstPublished|fromtimestamp }}</td>
+                            <td>{{ advisory.lastUpdated|fromtimestamp }}</td>
+                            {%- endif -%}
+                            <td>{{ advisory.status }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 col-sm-12">
+        {%- if advisory.productNames[0] != "NA" -%}
+        <div class="base-margin-bottom">
+            <h3 class="h3 relative">
+                Affected Product{%- if advisory.productNames|length > 1 -%}s{%- endif %}
+                {% if advisory.productNames|length > 10 %}
+                <span class="badge badge--secondary">{{ "{:,}".format(advisory.productNames|length) }}</span>
+                {% endif %}
+            </h3>
+            <ul>
+                {%- for platform in advisory.productNames -%}
+                <li class="productName hide">{{ platform }}</li>
+                {%- endfor -%}
+            </ul>
+            {% if advisory.productNames|length > 10 %}
+            <button class="btn btn--ghost btn--small half-margin-top hide" id="loadMore">Load more <span
+                    class="icon-more"></span></button>
+            <span id="or">OR</span>
+            <button class="btn btn--ghost btn--small half-margin-top hide" id="loadAll">Load all</button>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <div class="base-margin-bottom">
+            <h3 class="related-cve">
+                Related CVE{%- if advisory.cves|length > 1 -%}s{%- endif -%}
+            </h3>
+            <ul>
+                {%- for cve_id in advisory.cves -%}
+                <li class="cve-item">
+                    <a class="qtr-padding-right" href="{{ url_for('cves.result', cve_id=cve_id) }}">{{ cve_id }}</a>
+                    <a class="label label--primary label--tiny text-white"
+                        href="//www.cve.org/CVERecord?id={{ cve_id }}" target="_blank" rel="noopener noreferrer"
+                        title="{{cve_id}} on CVE">CVE</a>
+                    <a class="label label--secondary label--tiny text-white"
+                        href="//nvd.nist.gov/vuln/detail/{{ cve_id }}" target="_blank" rel="noopener noreferrer"
+                        title="{{cve_id}} on NVD">NVD</a>
+                    <a class="label label--light label--tiny" href="//vulmon.com/vulnerabilitydetails?qid={{ cve_id }}"
+                        target="_blank" rel="noopener noreferrer" title="{{ cve_id }} on Vulmon">Vulmon</a>
+                </li>
+                {%- endfor -%}
+            </ul>
+        </div>
+
+        {%- if advisory.cwe and advisory.cwe[0] not in ["NA", "CWE"] -%}
+        <div class="base-margin-bottom">
+            <h3 class="h3 related-cwe">
+                Related CWE{%- if advisory.cwe|length > 1 -%}s{%- endif -%}
+            </h3>
+            <ul>
+                {%- for cwe in advisory.cwe -%}
+                <li class="cwe-item">
+                    <a href="//cwe.mitre.org/data/definitions/{{ cwe.split('-')[1] }}.html" target="_blank"
+                        rel="noopener noreferrer" title="{{ cwe }}">{{ cwe }} <span
+                            class="icon-jump-out icon-size-12 qtr-padding-left"></span></a>
+                </li>
+                {%- endfor -%}
+            </ul>
+        </div>
+        {%- endif -%}
+
+        {%- if advisory.bugIDs[0] != "NA" -%}
+        <h3 class="h3 related-bugs">Related Bug ID{%- if advisory.bugIDs|length > 1 -%}s{%- endif -%}</h3>
+        <ul>
+            {%- for bug_id in advisory.bugIDs -%}
+            <li class="bug-item">
+                <a class="qtr-padding-right {% if bug_id == request.args.get('bug_id') %}text-gray-700{% endif %}"
+                    href="{{ url_for('bugs.result', bug_id=bug_id) }}" title="{{ bug_id }}">{{ bug_id }}</a>
+                <a class="label label--dark label--tiny text-white"
+                    href="//bst.cloudapps.cisco.com/bugsearch/bug/{{ bug_id }}" target="_blank"
+                    rel="noopener noreferrer" title="{{ bug_id }} on Cisco Bug Search Tool">BST <span
+                        class="icon-jump-out icon-size-10 qtr-padding-left"></span></a>
+            </li>
+            {%- endfor -%}
+        </ul>
+        {%- endif -%}
+    </div>
+</div>
+{%- endfor -%}
+
+<hr />
+
+{% include "includes/legal_disclaimer.html" %}
+{%- endblock content -%}
+
+{% block javascript %}
+<script src="{{ url_for('static', filename='js/loadMore.min.js') }}"></script>
+{% endblock javascript %}

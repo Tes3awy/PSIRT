@@ -1,17 +1,17 @@
 from datetime import date, timedelta
 
 import requests
-from flask import Blueprint, flash, redirect, render_template, request, session, url_for
+from flask import flash, redirect, render_template, request, session, url_for
 
 from psiapp import limiter
-from psiapp.dates.forms import DateRangeSearchForm
 from psiapp.utils import fetch_data, paginate
 
-dates_bp = Blueprint("dates", __name__, url_prefix="/all")
+from . import bp
+from .forms import DateRangeSearchForm
 
 
 # By Date Range Search Form Page
-@dates_bp.route("/", methods=["GET", "POST"])
+@bp.route("/range/search", methods=["GET", "POST"])
 @limiter.exempt
 def dates_range(title="Search by date range"):
     form = DateRangeSearchForm()
@@ -33,16 +33,17 @@ def dates_range(title="Search by date range"):
 
 
 # By Date Range Search Results Page
-@dates_bp.route("/<string:date_sort>", methods=["GET"])
+@bp.route("/all/<string:date_sort>", methods=["GET"])
 def results(date_sort: str):
-    pageIndex = request.args.get("pageIndex", 1, int)
-    pageSize = request.args.get("pageSize", 10, int)
-    startDate = request.args.get("startDate", None)
-    endDate = request.args.get("endDate", None)
+    pageIndex = request.args.get("pageIndex", 1, type=int)
+    pageSize = request.args.get("pageSize", 10, type=int)
+    startDate = request.args.get("startDate", None, type=str)
+    endDate = request.args.get("endDate", None, type=str)
     title = f"Search results from {startDate} to {endDate} (by {date_sort})"
+    uri = "{}?pageIndex={:n}&pageSize={:n}&startDate={}&endDate={}"
     try:
         res = fetch_data(
-            uri=f"all/{date_sort}?pageIndex={pageIndex}&pageSize={pageSize}&startDate={startDate}&endDate={endDate}&productNames=false",
+            uri=f"all/{uri.format(date_sort, pageIndex, pageSize, startDate, endDate)}&productNames=true",
             access_token=session.get("access_token"),
         )
     except requests.exceptions.ConnectionError as e:
@@ -80,6 +81,10 @@ def results(date_sort: str):
         tnp = paging.get("tnp")  # total number of pages
         start = paging.get("start")
         end = paging.get("end")
+        prev_url = f"{res.json().get('paging').get('prev')}&startDate={startDate}&endDate={endDate}"
+        first_url = uri.format(date_sort, 1, pageSize, startDate, endDate)
+        next_url = f"{res.json().get('paging').get('next')}&startDate={startDate}&endDate={endDate}"
+        last_url = uri.format(date_sort, tnp, pageSize, startDate, endDate)
         pagination = res.json().get("paging")
         flash(
             f"{f'Page {pageIndex} of {tnp} - ' if pageIndex != tnp else ''}{title}",
@@ -90,6 +95,10 @@ def results(date_sort: str):
             title=title,
             advisories=advisories,
             pagination=pagination,
+            prev_url=prev_url,
+            next_url=next_url,
+            first_url=first_url,
+            last_url=last_url,
             total_count=total_count,
             start_date=startDate,
             end_date=endDate,

@@ -7,7 +7,7 @@ setup(
     maintainer="Osama Abbas",
     maintainer_email="oabbas2512@gmail.com",
     url="https://github.com/Tes3awy/PSIRT",
-    keywords=["Cisco", "PSIRT"], 
+    keywords=["Cisco", "PSIRT", "OpenVuln", "API", "Flask"],
     version="1.0.0",
     packages=find_packages(),
     include_package_data=True,

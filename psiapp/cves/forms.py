@@ -18,7 +18,7 @@ class CVESearchForm(FlaskForm):
             Regexp(
                 regex=r"^CVE-\d{4}-\d{3,5}$",
                 flags=re.IGNORECASE,
-                message="A CVE ID must be in the format of CVE-YYYY-NNNN where N is an integer!",
+                message="A CVE ID must be in the format of CVE-YYYY-NNNN!",
             ),
         ],
         render_kw={"placeholder": "Enter a CVE ID"},

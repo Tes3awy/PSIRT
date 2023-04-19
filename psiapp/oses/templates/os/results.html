@@ -10,21 +10,20 @@
                 </a>
             </li>
             <li>
-                <a class="link" href="{{ url_for('oses.os') }}" title="OS-Version">OS-Version</a>
+                <a class="link" href="{{ url_for('.os') }}" title="OS-Version">OS-Version</a>
             </li>
-            <li>{{ os|upper }}</li>
+            <li>{{ os_type|upper }}</li>
             <li class="active" aria-current="page">{{ version }}</li>
         </ol>
     </nav>
     <!-- Pagination -->
     {%- if tnp > 1 -%}
-    {{ render_pagination(pagination, start, end, total_count) }}
+    {{ render_pagination(pagination, start, end, total_count, prev_url, next_url) }}
     {%- endif -%}
 </div>
 
 <hr />
 
-<h1 class="h1 base-margin-bottom">{{ title }}</h1>
 <ol>
     {%- for advisory in advisories -%}
     <li class="result-item">
@@ -37,46 +36,15 @@
 
 {%- for advisory in advisories -%}
 <div class="row base-margin-top">
-    <div class="col-md-8 col-sm-12">
+    <div class="col-md-8 col-12">
         <div class="row">
             <div class="col-12">
                 <h2 class="h2" id="{{ advisory.advisoryId }}">{{ advisory.advisoryTitle }}</h2>
             </div>
-            <div
-                class="col-{%- if advisory.csafUrl == NA and advisory.cvrfUrl == 'NA' -%}12{%- elif advisory.csafUrl == 'NA' or advisory.cvrfUrl == 'NA' -%}7{%- else -%}6{%- endif -%}">
-                {%- if advisory.sir in ["Critical", "High"] -%}
-                <span class="label label--small label--danger qtr-margin-right text-bold">{{ advisory.sir }}</span>
-                {%- elif advisory.sir == "Medium" -%}
-                <span class="label label--small label--warning qtr-margin-right text-bold">{{ advisory.sir }}</span>
-                {%- else -%}
-                <span class="label label--small label--info qtr-margin-right text-bold">{{ advisory.sir }}</span>
-                {%- endif -%}
-                <small class="text-small">CVSS Score: {{ advisory.cvssBaseScore }}/10.0</small>
-                <p class="text-small text-gray-700 no-margin-top">
-                    Advisory ID:
-                    <a class="text-info" href="{{ advisory.publicationUrl }}" target="_blank" rel="noopener noreferrer"
-                        title="{{ advisory.advisoryId }}">{{ advisory.advisoryId }}</a>
-                </p>
-            </div>
-            {% if advisory.csafUrl != "NA" or advisory.cvrfUrl != "NA" -%}
-            <div
-                class="col-{% if advisory.csafUrl == 'NA' or advisory.cvrfUrl == 'NA' -%}5{%- else %}6{%- endif %} flex align-items-center justify-content-end">
-                {% if advisory.csafUrl != "NA" -%}
-                <div class="qtr-margin-right">
-                    <a href="{{ advisory.csafUrl }}" class="btn btn--ghost btn--small" title="CSAF">
-                        <span class="btn--icon icon-download icon-size-12"></span> CSAF
-                    </a>
-                </div>
-                {% endif %}
-                {% if advisory.cvrfUrl != "NA" -%}
-                <div>
-                    <a href="{{ advisory.cvrfUrl }}" class="btn btn--ghost btn--small" title="CVRF">
-                        <span class="btn--icon icon-download icon-size-12"></span> CVRF
-                    </a>
-                </div>
-                {% endif %}
-            </div>
-            {% endif %}
+            <!-- Score -->
+            {% include 'includes/score.html' %}
+            <!-- Machine Readable Formats -->
+            {% include 'includes/mrf.html' %}
         </div>
 
         <div class="base-margin-bottom">
@@ -130,7 +98,7 @@
         </div>
     </div>
     <div class="col-md-4 col-sm-12">
-        {%- if os in ['ios', 'iosxe'] -%}
+        {%- if os_type in ['ios', 'iosxe'] -%}
         <div class="base-margin-bottom">
             <h3 class="h3">
                 Fixed Release{%- if advisory.firstFixed|length > 1 -%}s{%- endif -%}
@@ -171,25 +139,20 @@
             <ul>
                 {%- for id in advisory.cves -%}
                 <li class="cve-item">
-                    <a class="link qtr-padding-right" href="{{ url_for('cves.result', id=id) }}">{{ id }}</a>
-                    <a class="link label label--primary label--small text-white"
-                        href="//www.cve.org/CVERecord?id={{ id }}" target="_blank" rel="noopener noreferrer"
-                        title="{{ id }} on CVE">CVE</a>
-                    <a class="link label label--secondary label--small text-white"
-                        href="//nvd.nist.gov/vuln/detail/{{ id }}" target="_blank" rel="noopener noreferrer"
-                        title="{{ id }} on NVD">NVD</a>
-                    <a class="link label label--light label--small"
-                        href="//vulmon.com/vulnerabilitydetails?qid={{ id }}" target="_blank" rel="noopener noreferrer"
-                        title="{{ id }} on Vulmon">Vulmon</a>
+                    <a class="qtr-padding-right" href="{{ url_for('cves.result', cve_id=id) }}">{{ id }}</a>
+                    <a class="label label--primary label--small text-white" href="//www.cve.org/CVERecord?id={{ id }}"
+                        target="_blank" rel="noopener noreferrer" title="{{ id }} on CVE">CVE</a>
+                    <a class="label label--secondary label--small text-white" href="//nvd.nist.gov/vuln/detail/{{ id }}"
+                        target="_blank" rel="noopener noreferrer" title="{{ id }} on NVD">NVD</a>
+                    <a class="label label--light label--small" href="//vulmon.com/vulnerabilitydetails?qid={{ id }}"
+                        target="_blank" rel="noopener noreferrer" title="{{ id }} on Vulmon">Vulmon</a>
                 </li>
                 {%- endfor -%}
             </ul>
         </div>
         {%- if advisory.cwe and advisory.cwe[0] not in ["NA", "CWE"] -%}
         <div class="base-margin-bottom">
-            <h3 class="h3 related-cwe">
-                Related CWE{%- if advisory.cwe|length > 1 -%}s{%- endif -%}
-            </h3>
+            <h3 class="h3 related-cwe">Related CWE{%- if advisory.cwe|length > 1 -%}s{%- endif -%}</h3>
             <ul>
                 {%- for cwe in advisory.cwe -%}
                 <li class="cwe-item">
@@ -202,23 +165,20 @@
         </div>
         {%- endif -%}
 
-        {%- if advisory.bugIDs -%}
-        <div class="base-padding-bottom">
-            <h3 class="related-bugs" id="{{ advisory.advisoryTitle|lower|replace(' ', '-') }}-related-bug">
-                Related Bug ID{%- if advisory.bugIDs|length > 1 -%}s{%- endif -%}
-            </h3>
-            <ul>
-                {%- for id in advisory.bugIDs -%}
-                <li class="bug-item">
-                    <a href="{{ url_for('bugs.result', id=id) }}" title="{{ id }}">{{ id }}</a>&nbsp;<a
-                        class="link label label--dark label--small text-white"
-                        href="//bst.cloudapps.cisco.com/bugsearch/bug/{{ id }}" target="_blank"
-                        rel="noopener noreferrer" title="{{ id }} on Cisco Bug Search Tool">BST <span
-                            class="icon-jump-out icon-size-10 qtr-padding-left"></span></a>
-                </li>
-                {%- endfor -%}
-            </ul>
-        </div>
+        {%- if advisory.bugIDs[0] != "NA" -%}
+        <h3 class="related-bugs">Related Bug ID{%- if advisory.bugIDs|length > 1 -%}s{%- endif -%}</h3>
+        <ul>
+            {%- for bug_id in advisory.bugIDs -%}
+            <li class="bug-item">
+                <a class="qtr-padding-right" href="{{ url_for('bugs.result', bug_id=bug_id) }}"
+                    title="{{ bug_id }}">{{ bug_id }}</a>
+                <a class="label label--dark label--small text-white"
+                    href="//bst.cloudapps.cisco.com/bugsearch/bug/{{ bug_id }}" target="_blank"
+                    rel="noopener noreferrer" title="{{ bug_id }} on Cisco Bug Search Tool">BST <span
+                        class="icon-jump-out icon-size-10 qtr-padding-left"></span></a>
+            </li>
+            {%- endfor -%}
+        </ul>
         {%- endif -%}
     </div>
 </div>
@@ -226,7 +186,7 @@
 {%- endfor -%}
 
 {% if tnp > 1 %}
-{{ render_next_prev(pagination) }}
+{{ render_prev_next(prev_url, next_url, first_url, last_url) }}
 {% endif %}
 
 {% include "includes/legal_disclaimer.html" %}

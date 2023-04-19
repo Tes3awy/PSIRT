@@ -1,0 +1,16 @@
+<div
+    class="col-{%- if advisory.csafUrl == 'NA' and advisory.cvrfUrl == 'NA' -%}12{%- elif advisory.csafUrl == 'NA' or advisory.cvrfUrl == 'NA' -%}7{%- else -%}6{%- endif -%}">
+    {%- if advisory.sir in ["Critical", "High"] -%}
+    <span class="qtr-margin-right text-bold label label--small label--danger">{{ advisory.sir }}</span>
+    {%- elif advisory.sir == "Medium" -%}
+    <span class="qtr-margin-right text-bold label label--small label--warning">{{ advisory.sir }}</span>
+    {%- else -%}
+    <span class="qtr-margin-right text-bold label label--small label--info">{{ advisory.sir }}</span>
+    {%- endif -%}
+    <small class="text-muted text-small">CVSS Score: {{ advisory.cvssBaseScore }}/10.0</small>
+    <p class="text-gray-700 no-margin-top text-small">
+        Advisory ID:
+        <a class="text-info" href="{{ advisory.publicationUrl }}" target="_blank" rel="noopener noreferrer"
+            title="{{ advisory.advisoryId }}">{{ advisory.advisoryId }}</a>
+    </p>
+</div>

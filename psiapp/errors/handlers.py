@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import render_template
 from flask_wtf.csrf import CSRFError
 from werkzeug.exceptions import (
     BadRequest,
@@ -9,14 +9,15 @@ from werkzeug.exceptions import (
     Unauthorized,
 )
 
-errors_bp = Blueprint("errors", __name__)
+from psiapp.errors import bp
 
-@errors_bp.app_errorhandler(CSRFError)
-@errors_bp.app_errorhandler(BadRequest)
-@errors_bp.app_errorhandler(Unauthorized)
-@errors_bp.app_errorhandler(Forbidden)
-@errors_bp.app_errorhandler(NotFound)
-@errors_bp.app_errorhandler(TooManyRequests)
-@errors_bp.app_errorhandler(InternalServerError)
-def handle_http_error(error):
-    return render_template("error.html", title=error.name, error=error), error.code
+
+@bp.app_errorhandler(CSRFError)  # 400
+@bp.app_errorhandler(BadRequest)  # 400
+@bp.app_errorhandler(Unauthorized)  # 401
+@bp.app_errorhandler(Forbidden)  # 403
+@bp.app_errorhandler(NotFound)  # 404
+@bp.app_errorhandler(TooManyRequests)  # 429
+@bp.app_errorhandler(InternalServerError)  # 500
+def handle_http_error(ex):
+    return render_template("errors/error.html", title=ex.name, error=ex), ex.code

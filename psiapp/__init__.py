@@ -24,25 +24,39 @@ def create_app(config_class=Config):  # Replace with ProductionConfig in Product
     htmlmin.init_app(app)
     limiter.init_app(app)
 
-    from psiapp.bugs.views import bugs_bp
-    from psiapp.cves.views import cves_bp
-    from psiapp.dates.views import dates_bp
-    from psiapp.errors.handlers import errors_bp
-    from psiapp.filters.filters import filters_bp
-    from psiapp.main.views import main_bp
-    from psiapp.oses.views import oses_bp
-    from psiapp.products.views import products_bp
-
-    limiter.exempt(main_bp)
-    limiter.exempt(errors_bp)
+    from psiapp.bugs.views import bp as bugs_bp
 
     app.register_blueprint(bugs_bp)
+
+    from psiapp.cves.views import bp as cves_bp
+
     app.register_blueprint(cves_bp)
+
+    from psiapp.dates.views import bp as dates_bp
+
     app.register_blueprint(dates_bp)
+
+    from psiapp.errors.handlers import bp as errors_bp
+
     app.register_blueprint(errors_bp)
+    limiter.exempt(errors_bp)
+
+    from psiapp.filters.filters import bp as filters_bp
+
     app.register_blueprint(filters_bp)
+    limiter.exempt(filters_bp)
+
+    from psiapp.main.views import bp as main_bp
+
     app.register_blueprint(main_bp)
+    limiter.exempt(main_bp)
+
+    from psiapp.oses.views import bp as oses_bp
+
     app.register_blueprint(oses_bp)
+
+    from psiapp.products.views import bp as products_bp
+
     app.register_blueprint(products_bp)
 
     return app

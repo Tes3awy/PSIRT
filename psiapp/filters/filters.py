@@ -1,10 +1,8 @@
 from datetime import datetime
 
-from flask import Blueprint
-
-filters_bp = Blueprint("filters", __name__)
+from psiapp.filters import bp
 
 
-@filters_bp.app_template_filter(name="fromtimestamp")
-def datectime(datetimestamp):
-    return datetime.fromisoformat(datetimestamp).strftime("%Y-%b-%d")
+@bp.app_template_filter(name="fromtimestamp")
+def datectime(datetimestamp: str):
+    return datetime.fromisoformat(datetimestamp).strftime("%B %d, %Y %H:%M")

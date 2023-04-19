@@ -1,0 +1,20 @@
+{% if advisory.csafUrl != "NA" or advisory.cvrfUrl != "NA" -%}
+<div
+    class="col-{% if advisory.csafUrl == 'NA' or advisory.cvrfUrl == 'NA' -%}5{%- else %}6{%- endif %} flex align-items-center justify-content-end">
+    {% if advisory.csafUrl != "NA" -%}
+    <div class="qtr-margin-right">
+        <a href="{{ advisory.csafUrl }}" class="btn btn--small btn--ghost"
+            title="{{ advisory.advisoryId }} JSON Format">
+            <span class=" icon-download icon-size-12"></span> CSAF
+        </a>
+    </div>
+    {% endif %}
+    {% if advisory.cvrfUrl != "NA" -%}
+    <div>
+        <a href="{{ advisory.cvrfUrl }}" class="btn btn--small btn--ghost" title="{{ advisory.advisoryId }} XML Format">
+            <span class="icon-download icon-size-12"></span> CVRF
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endif %}

@@ -1,34 +1,38 @@
-{% macro render_pagination(pagination, start, end, total_count) %}
+{% macro render_pagination(pagination, start, end, total_count, prev_url, next_url) %}
 <div class="text-muted">
     {%- if pagination.prev != "NA" -%}
-    <a class="text-muted opacity-70 pagination-nav" {% if pagination.prev == "NA" -%}disabled {% else %}
-        href="{{ pagination.prev|replace(' ', '+') }}{% if varargs[0] and varargs[1] %}&startDate={{ varargs[0] }}&endDate={{ varargs[1] }}{% endif %}"
-        {%- endif %} title="Prev">
+    <a class="opacity-70 text-muted pagination-nav {% if pagination.prev == 'NA' -%}disabled{% endif %}"
+        href="{% if pagination.prev == 'NA' -%}{{ prev_url }}{% else %}javascript:{% endif %}" title="Previous page"
+        {% if pagination.prev == "NA" -%}disabled {% endif %}>
         <span class="icon-step-prev"></span>
     </a>
     {%- endif -%}
-    <small class="text-muted opacity-70 qtr-margin-left qtr-padding-right">Showing {{ start }} &mdash; {{ end }}
+    <small class="opacity-70 text-muted qtr-margin-left qtr-padding-right">Showing {{ start }} &mdash; {{ end }}
         of total {{ total_count }}
         advisories ({{ tnp }} pages)</small>
     {%- if pagination.next != "NA" -%}
-    <a class="text-muted opacity-70 pagination-nav" {% if pagination.next == "NA" -%}disabled {% else %}
-        href="{{ pagination.next|replace(' ', '+') }}{% if varargs[0] and end_date %}&startDate={{ varargs[0] }}&endDate={{ varargs[1] }}{% endif %}"
-        {%- endif %} title="Next">
+    <a class="opacity-70 text-muted pagination-nav {% if pagination.next == 'NA' -%}disabled {% endif %}"
+        href="{% if pagination.next != 'NA' %}{{ next_url }}{% endif %}" title="Next page"
+        {% if pagination.next == "NA" -%}disabled {% endif %}>
         <span class="icon-step-next"></span>
     </a>
     {%- endif -%}
 </div>
 {% endmacro  %}
 
-{% macro render_next_prev(pagination) %}
-<ul class="pagination max-width justify-content-center base-margin-bottom">
-    <li {% if pagination.prev == "NA" -%}disabled{%- else -%}class="active" {%- endif -%}>
-        <a href="{{ pagination.prev|replace(' ', '+') }}{% if varargs[0] and varargs[1] %}&startDate={{ varargs[0] }}&endDate={{ varargs[1] }}{% endif %}"
-            title="Prev">Previous</a>
+{% macro render_prev_next(prev_url, next_url, first_url, last_url) %}
+<ul class="pagination pagination--rounded max-width justify-content-center base-margin-bottom">
+    <li {% if pagination.prev == "NA" -%} class="disabled" disabled{%- else -%}class="active" {%- endif -%}>
+        <a href="{{ first_url|replace(' ', '+') }}" title="First page">First</a>
     </li>
-    <li {% if pagination.next == "NA" -%}disabled{%- else -%}class="active" {%- endif -%}>
-        <a href="{{ pagination.next|replace(' ', '+') }}{% if varargs[0] and varargs[1] %}&startDate={{ varargs[0] }}&endDate={{ varargs[1] }}{% endif %}"
-            title="Next">Next</a>
+    <li {% if pagination.prev == "NA" -%} class="disabled" disabled{%- else -%}class="active" {%- endif -%}>
+        <a href="{{ prev_url|replace(' ', '+') }}" title="Previous page">Previous</a>
+    </li>
+    <li {% if pagination.next == "NA" -%} class="disabled" disabled{%- else -%}class="active" {%- endif -%}>
+        <a href="{{ next_url|replace(' ', '+') }}" title="Next page">Next</a>
+    </li>
+    <li {% if pagination.next == "NA" -%} class="disabled" disabled{%- else -%}class="active" {%- endif -%}>
+        <a href="{{ last_url|replace(' ', '+') }}" title="Last page">Last</a>
     </li>
 </ul>
 {% endmacro %}
@@ -36,9 +40,9 @@
 {% macro with_errors(field) %}
 {%- if field.errors -%}
 {%- for error in field.errors -%}
-<div class="form-group__help text-danger" role="alert" tabindex="-1">
+<span class="form-group__help text-danger" role="alert" tabindex="-1">
     <span class="icon-error-outline"></span><span>{{ error }}</span>
-</div>
+</span>
 {%- endfor -%}
 {%- endif -%}
 {% endmacro %}

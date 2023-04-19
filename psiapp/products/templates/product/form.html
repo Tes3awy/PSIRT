@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {%- block css -%}
-<link href="{{ url_for('static', filename='css/select2.min.css') }}" rel="stylesheet" />
+<link href="{{ url_for('products.static', filename='css/select2.min.css') }}" rel="stylesheet" />
 {%- endblock css -%}
 
 {%- block content -%}
@@ -37,6 +37,6 @@
 
 {%- block javascript -%}
 <script src="{{ url_for('static', filename='js/app.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/select2.full.min.js') }}"></script>
+<script src="{{ url_for('products.static', filename='js/select2.full.min.js') }}"></script>
 <script type="text/javascript">$(document).ready(function () {$('#product').select2()})</script>
 {%- endblock javascript -%}

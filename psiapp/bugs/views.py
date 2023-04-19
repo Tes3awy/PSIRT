@@ -1,16 +1,16 @@
 import requests
-from flask import Blueprint, flash, redirect, render_template, request, session, url_for
+from flask import flash, redirect, render_template, request, session, url_for
 from markupsafe import escape
 
 from psiapp import limiter
-from psiapp.bugs.forms import BugSearchForm
 from psiapp.utils import fetch_data
 
-bugs_bp = Blueprint("bugs", __name__, url_prefix="/bug")
+from . import bp
+from .forms import BugSearchForm
 
 
 # Cisco Bug ID Search Form Page
-@bugs_bp.route("/", methods=["GET", "POST"])
+@bp.route("/", methods=["GET", "POST"])
 @limiter.exempt
 def bug(title="Bug ID"):
     form = BugSearchForm()
@@ -21,7 +21,7 @@ def bug(title="Bug ID"):
 
 
 # Cisco Bug ID Result Page
-@bugs_bp.route("/result", methods=["GET"])
+@bp.route("/result", methods=["GET"])
 def result():
     if not request.args.get("bug_id", None, type=str):
         flash("A Cisco bug ID is required!", category="danger")
@@ -29,7 +29,7 @@ def result():
     bug_id = escape(request.args.get("bug_id").strip())
     try:
         res = fetch_data(
-            uri=f"bugid/{bug_id}?productNames=false",
+            uri=f"bugid/{bug_id}?productNames=true",
             access_token=session.get("access_token"),
         )
     except requests.exceptions.ConnectionError as e:

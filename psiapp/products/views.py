@@ -1,17 +1,17 @@
 import requests
-from flask import Blueprint, flash, redirect, render_template, request, session, url_for
+from flask import flash, redirect, render_template, request, session, url_for
 from markupsafe import escape
 
 from psiapp import limiter
-from psiapp.products.forms import ProductSearchForm
-from psiapp.products.utils import fetch_products
 from psiapp.utils import fetch_data, paginate
 
-products_bp = Blueprint("products", __name__, url_prefix="/product")
+from . import bp
+from .forms import ProductSearchForm
+from .utils import fetch_products
 
 
 # By Cisco Product Search Form Page
-@products_bp.route("/search", methods=["GET", "POST"])
+@bp.route("/search", methods=["GET", "POST"])
 @limiter.exempt
 def product(title="Cisco Products"):
     form = ProductSearchForm()
@@ -24,20 +24,23 @@ def product(title="Cisco Products"):
 
 
 # By Cisco Product Search Results Page
-@products_bp.route("", methods=["GET"])
+@bp.route("", methods=["GET"])
 def results():
     if not request.args.get("product", None, type=str):
         flash("A Cisco product is required!", category="danger")
-        return redirect(url_for("products.product"))
+        return redirect(url_for(".product"))
     product = request.args.get("product", type=str)
     pageIndex = request.args.get("pageIndex", 1, type=int)
     pageSize = request.args.get("pageSize", 10, type=int)
-    uri = f"product?product={product}&pageIndex={pageIndex}&pageSize={pageSize}&productNames=false"
+    uri = "product?product={}&pageIndex={}&pageSize={}"
     try:
-        res = fetch_data(uri=uri, access_token=session.get("access_token"))
+        res = fetch_data(
+            uri=f"{uri.format(product, pageIndex, pageSize)}&productNames=false",
+            access_token=session.get("access_token"),
+        )
     except requests.exceptions.ConnectionError as e:
         flash("Connection Error! Failed to establish a connection", category="danger")
-        return redirect(url_for("products.product"))
+        return redirect(url_for(".product"))
     except requests.exceptions.HTTPError as e:
         if e.response.status_code == 403:
             flash(
@@ -50,14 +53,14 @@ def results():
                 f"{e.response.json().get('errorCode')} - {e.response.json().get('errorMessage')}",
                 category="danger",
             )
-            return redirect(url_for("products.product"))
+            return redirect(url_for(".product"))
         if e.response.status_code == 503:
             flash(
                 "Service is currently unavailable from Cisco! Try again later", "danger"
             )
-            return redirect(url_for("products.product"))
+            return redirect(url_for(".product"))
         flash(str(e), category="danger")
-        return redirect(url_for("products.product"))
+        return redirect(url_for(".product"))
     else:
         advisories = res.json().get("advisories")
         paging = paginate(
@@ -67,6 +70,10 @@ def results():
         tnp = paging.get("tnp")  # total number of pages
         start = paging.get("start")
         end = paging.get("end")
+        prev_url = res.json().get("paging").get("prev")
+        first_url = uri.format(product, 1, pageSize)
+        next_url = res.json().get("paging").get("next")
+        last_url = uri.format(product, tnp, pageSize)
         pagination = res.json().get("paging")
         flash(
             f"{f'Page {pageIndex} of {tnp} - ' if pageIndex != tnp else ''}Search results for {product}",
@@ -78,6 +85,10 @@ def results():
             advisories=advisories,
             product=product,
             pagination=pagination,
+            prev_url=prev_url,
+            first_url=first_url,
+            next_url=next_url,
+            last_url=last_url,
             total_count=total_count,
             tnp=tnp,
             start=start + 1,

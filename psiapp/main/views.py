@@ -1,16 +1,13 @@
 import requests
-from flask import Blueprint
 from flask import current_app as app
 from flask import flash, redirect, render_template, session, url_for
 
-from psiapp.main.utils import get_token
-
-main_bp = Blueprint("main", __name__)
+from . import bp
+from .utils import get_token
 
 
 # Home Page
-@main_bp.route("/home", methods=["GET"])
-@main_bp.route("/", methods=["GET"])
+@bp.route("/", methods=["GET"])
 def index(title="Home"):
     try:
         token = get_token(
@@ -25,11 +22,10 @@ def index(title="Home"):
         return redirect(url_for("main.index"))
     else:
         session["access_token"] = token.get("access_token")
-    return render_template("index.html", title=title)
+    return render_template("main/index.html", title=title)
 
 
 # About Page
-@main_bp.route("/faq", methods=["GET"])
-@main_bp.route("/about", methods=["GET"])
+@bp.route("/about", methods=["GET"])
 def about(title="About"):
-    return render_template("about.html", title=title)
+    return render_template("main/about.html", title=title)

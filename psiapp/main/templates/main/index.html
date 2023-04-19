@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {%- block jshead -%}
-<script src="{{ url_for('static', filename='js/scrollreveal.min.js') }}"></script>
+<script src="{{ url_for('main.static', filename='scrollreveal.min.js') }}"></script>
 {%- endblock jshead -%}
 
 {%- set search_forms = [
@@ -31,10 +31,12 @@
     {% for title, description, uri in search_forms -%}
     <div class="flex flex-column text-white bg-tertiary base-padding" id="panel">
         <h4 class="h4 text-center">{{ title }}</h4>
-        <p class="half-padding-top half-padding-bottom" style="margin-top:auto;margin-bottom:auto;">{{ description|safe }}</p>
+        <p class="half-padding-top half-padding-bottom" style="margin-top:auto;margin-bottom:auto;">
+            {{ description|safe }}
+        </p>
         <div class="text-center" style="margin-top:auto;">
-            <a href="{{ url_for(uri) }}" class="btn btn--ghost btn--justified text-white"
-                title="{{ title }}">{{ title }} <span class="icon-small icon-right-arrow-closed-outline"></span>
+            <a href="{{ url_for(uri) }}" class="btn btn--ghost btn--justified text-white" title="{{ title }}">Search
+                Form <span class="icon-small icon-search"></span>
             </a>
         </div>
     </div>
@@ -43,5 +45,5 @@
 {%- endblock content -%}
 
 {%- block javascript -%}
-<script src=" {{ url_for('static', filename='js/scroll.min.js') }}"></script>
+<script src=" {{ url_for('main.static', filename='scroll.min.js') }}"></script>
 {%- endblock javascript -%}

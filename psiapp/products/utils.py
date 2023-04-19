@@ -5,7 +5,6 @@ from flask import flash, redirect, url_for
 def fetch_products(prodType: str = "CISCO") -> list[str]:
     try:
         r = requests.get(
-            # https://tools.cisco.com/security/center/productBoxData.x
             url="https://sec.cloudapps.cisco.com/security/center/productBoxData.x",
             params={"prodType": prodType},
             headers={"Content-Type": "application/json", "Accept": "application/json"},

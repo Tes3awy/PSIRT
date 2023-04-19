@@ -1,4 +1,4 @@
-{% from "macros.html" import render_pagination, render_next_prev, with_errors with context %}
+{% from "macros.html" import render_pagination, render_prev_next, with_errors with context %}
 <!DOCTYPE html>
 <html lang="en-US">
 
@@ -6,9 +6,9 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         {%- if title -%}
-        <title>{{ title }} - SEE Egypt</title>
+        <title>{{ title }}</title>
         {%- else -%}
-        <title>PSI - SEE Egypt</title>
+        <title>PSI</title>
         {%- endif -%}
         <meta name="description"
             content="Cisco Product Security Incident Response Team (PSIRT) is a dedicated, global team that manages the receipt, investigation, and public reporting of security vulnerability information that is related to Cisco products and networks." />
@@ -33,33 +33,31 @@
         <!-- Navbar -->
         {%- include "includes/navbar.html" -%}
         <main class="content content--alt">
-            <div class="container">
-                <div class="row">
-                    <!-- Sidebar -->
-                    {%- include "includes/sidebar.html" -%}
-                    <div class="col-10 col-lg-9 col-xl-10">
-                        <div class="section">
-                            <div class="container">
-                                {%- with messages = get_flashed_messages(with_categories=true) -%}
-                                {%- if messages -%}
-                                {%- for category, message in messages -%}
-                                <div class="alert alert--{{ category }}">
-                                    {%- if category in ["danger", "warning"] -%}
-                                    <div class="alert__icon icon-warning-outline"></div>
-                                    {%- elif category == "success" -%}
-                                    <div class="alert__icon icon-check-outline"></div>
-                                    {%- else -%}
-                                    <div class="alert__icon icon-info-outline"></div>
-                                    {%- endif -%}
-                                    <div class="alert__message">{{ message|safe }}</div>
-                                    <div class="alert__close"><span class="icon-close"></span></div>
-                                </div>
-                                {%- endfor -%}
+            <div class="row">
+                <!-- Sidebar -->
+                {%- include "includes/sidebar.html" -%}
+                <div class="col-10 col-lg-9 col-xl-10">
+                    <div class="section">
+                        <div class="container">
+                            {%- with messages = get_flashed_messages(with_categories=true) -%}
+                            {%- if messages -%}
+                            {%- for category, message in messages -%}
+                            <div class="alert alert--{{ category }}" role="alert">
+                                {%- if category in ["danger", "warning"] -%}
+                                <div class="alert__icon icon-warning-outline"></div>
+                                {%- elif category == "success" -%}
+                                <div class="alert__icon icon-check-outline"></div>
+                                {%- else -%}
+                                <div class="alert__icon icon-info-outline"></div>
                                 {%- endif -%}
-                                {%- endwith -%}
-                                <!-- Content Block -->
-                                {%- block content -%}{%- endblock content -%}
+                                <div class="alert__message">{{ message|safe }}</div>
+                                <div class="alert__close"><span class="icon-close"></span></div>
                             </div>
+                            {%- endfor -%}
+                            {%- endif -%}
+                            {%- endwith -%}
+                            <!-- Content Block -->
+                            {%- block content -%}{%- endblock content -%}
                         </div>
                     </div>
                 </div>

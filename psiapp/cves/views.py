@@ -1,16 +1,16 @@
 import requests
-from flask import Blueprint, flash, redirect, render_template, request, session, url_for
+from flask import flash, redirect, render_template, request, session, url_for
 from markupsafe import escape
 
 from psiapp import limiter
-from psiapp.cves.forms import CVESearchForm
 from psiapp.utils import fetch_data
 
-cves_bp = Blueprint("cves", __name__, url_prefix="/cve")
+from . import bp
+from .forms import CVESearchForm
 
 
 # CVE Search Form Page
-@cves_bp.route("/", methods=["GET", "POST"])
+@bp.route("/", methods=["GET", "POST"])
 @limiter.exempt
 def cve(title="CVE ID"):
     form = CVESearchForm()
@@ -21,7 +21,7 @@ def cve(title="CVE ID"):
 
 
 # CVE Search Results Page
-@cves_bp.route("/result", methods=["GET"])
+@bp.route("/result", methods=["GET"])
 def result():
     if not request.args.get("cve_id", None, type=str):
         flash("A Cisco CVE ID is required!", category="danger")
@@ -29,7 +29,7 @@ def result():
     cve_id = escape(request.args.get("cve_id").strip().upper())
     try:
         res = fetch_data(
-            uri=f"cve/{cve_id}?productNames=false",
+            uri=f"cve/{cve_id}?productNames=true",
             access_token=session.get("access_token"),
         )
     except requests.exceptions.ConnectionError as e:

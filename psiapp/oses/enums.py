@@ -11,3 +11,6 @@ class SelectOptions(Enum):
     FTD = "ftd", "FTD"
     FMC = "fmc", "FMC"
     FXOS = "fxos", "FXOS"
+
+    def __str__(self):
+        return f"{self.value} is for {self.name} devices"

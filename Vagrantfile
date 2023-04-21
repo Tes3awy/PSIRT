@@ -46,16 +46,28 @@ Vagrant.configure("2") do |config|
   # argument is a set of non-required options.
   # config.vm.synced_folder "../data", "/vagrant_data"
 
+  # config.vm.synced_folder "./", "/home/vagrant/app", type: "rsync", rsync__auto: true, rsync__exclude: ["./*venv*", "./vscode", "./.github", "./assets", "__pycache__", "./*.md"]
+
+
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
-  # Example for VirtualBox:
-  #
-  config.vm.provider "vmware_desktop" do |vb|
+  # VMware Workstation/Fusion provider
+  config.vm.provider "vmware_desktop" do |vmware|
+    # Display the GUI when booting the machine
+    vmware.gui = true
+  
+    # Customize the amount of memory and CPU on the VM
+    vmware.vmx["memsize"] = "4096"
+    vmware.vmx["numvcpus"] = "2"
+  end
+  # Virtualbox provider
+  config.vm.provider "virtualbox" do |vb|
     # Display the GUI when booting the machine
     vb.gui = true
-  
-    # Customize the amount of memory on the VM:
+
+    # Customize the amount of memory and CPU on the VM
     vb.memory = "4096"
+    vb.cpus = 2
   end
   #
   # View the documentation for the provider you are using for more
@@ -64,31 +76,7 @@ Vagrant.configure("2") do |config|
   # Enable provisioning with a shell script. Additional provisioners such as
   # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
   # documentation for more information about their specific syntax and use.
-  config.vm.provision "shell", inline: <<-SHELL
-    # Update and Install requirements
-    apt-get update
-    apt-get install -y python3-pip python3-dev python3-venv python3-setuptools nginx redis supervisor git
-
-    # Configure Nginx
-    unlink /etc/nginx/sites-enabled/default
-    cp /home/vagrant/app/nginx.conf /etc/nginx/sites-enabled/
-
-    # Clone the Flask application from GitHub to /home/vagrant/app
-    git clone -b feature/vagrant https://github.com/Tes3awy/PSIRT.git /home/vagrant/app
-
-    # Install requirements, Gunicorn, and Flask-Limiter
-    python3 -m venv /home/vagrant/app/venv
-    source /home/vagrant/app/venv/bin/activate
-    python3 -m pip install --no-cache-dir -r /home/vagrant/app/requirements.txt gunicorn Flask-Limiter[redis]==3.3.0
-
-    # Start the application
-    nginx -s reload
-
-    # Configure supervisor
-    mkdir /var/log/psiapp
-    mkdir /etc/supervisor/conf.d/psiapp
-    cp /home/vagrant/app/supervisor.conf /etc/supervisor/conf.d/psiapp
-    sudo supervisorctl reload
-
-  SHELL
+  config.vm.synced_folder ".", "/home/vagrant/app", type: "rsync",
+    rsync__exclude: [".git", "*env", "__pycache__", "*/__pycache__", "^[Dd]ocker*", ".git*" "*.md", "security.txt"]
+  config.vm.provision "shell", keep_color: true, path: "setup.sh"
 end

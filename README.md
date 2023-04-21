@@ -196,6 +196,8 @@ $ cd PSIRT
 $ vagrant up --provider vmware_desktop
 ```
 
+> If you are using VMware as your provider, make sure you have the [VMware Utility](https://developer.hashicorp.com/vagrant/docs/providers/vmware/vagrant-vmware-utility)
+
 Once Vagrant finishes installation, you will get an IP address displayed in the terminal. Open that IP in you browser.
 
 ```bash
@@ -204,7 +206,7 @@ Once Vagrant finishes installation, you will get an IP address displayed in the 
     default: 192.168.64.134
 ```
 
-> You can also deploy the app on [Virtualbox](https://www.virtualbox.org/), but you just need to modify couple of lines in the `Vagrantfile` _(Provider-specific configuration section)_
+> You can also deploy the app on [Virtualbox](https://www.virtualbox.org/). Run `vagrant up --provider virtualbox` instead
 
 ## Screenshots
 

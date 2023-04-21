@@ -20,7 +20,6 @@ ENV PATH=$PATH:/home/psiuser/.local/bin
 
 # Install libraries
 RUN pip install --user -U pip
-RUN pip install --user --no-cache-dir wheel
 RUN pip install --user --no-cache-dir -r requirements.txt
 RUN pip install --user --no-cache-dir gunicorn Flask-Limiter[redis]==3.3.0
 

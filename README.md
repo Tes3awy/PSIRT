@@ -3,7 +3,6 @@
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/Tes3awy/PSIRT/badge)](https://api.securityscorecards.dev/projects/github.com/Tes3awy/PSIRT)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
-![Wheel: yes](https://img.shields.io/pypi/wheel/yes)
 
 # Cisco PSIRT OpenVuln API Web App
 
@@ -25,22 +24,23 @@ On Mar 2, 2023, certain changes were made to the Cisco API console which will ma
 2. [Solution Components](#solution-components)
 3. [Usage](#usage)
 4. [Installation](#installation)
-5. [Dockerize](#dockerize)
-6. [Screenshots](#screenshots)
-7. [Documentation](#documentation)
-8. [Use Case](#use-case)
-9. [Considerations](#considerations)
-10. [Disclaimer](#disclaimer)
+5. [Docker](#docker)
+6. [Vagrant](#vagrant)
+7. [Screenshots](#screenshots)
+8. [Documentation](#documentation)
+9. [Use Case](#use-case)
+10. [Considerations](#considerations)
 
 ## Features
 
 - Using a set of search forms, you can get all information of a CVE by its ID, or even get all CVEs of not only IOS and IOS-XE, both NX-OS and NX-OS in ACI mode, but also ASA, FTD, FMC, and FXOS. You can also search for security advisories for a specific Cisco Product.
-- Date range search.
+- Support for Date range search.
 - Cisco authentic look and feel.
 - Fully Responsive on mobile devices.
 - Extensive error handling.
-- Dockerized application.
-- Easy access with no login required. (Might be added later)
+- Docker application.
+- Support for Vagrant box.
+- Easy access with no login required. _(Might be added later)_
 
 ## Solution Components
 
@@ -169,7 +169,7 @@ def create_app(config_class=ProductionConfig):  # this line
     ...
 ```
 
-## Dockerize
+## Docker
 
 You can build and run the application in a Docker container
 
@@ -182,6 +182,31 @@ $ docker run -d -p 80:80 --name psi psirt
 ```
 
 2. Open `localhost:80` _(port 80 this time which is the default port for HTTP)_ in your browser and you are ready to use your production-ready dockerized application.
+
+## Vagrant
+
+You might want to create an virtual machine instead of a docker container. You can easily deploy the application as I have added `Vagrantfile`, `setup.sh`, `nginx.conf`, `supervisor.conf` which you can use to instantly deploy your application in an Ubuntu VM.
+
+All you need have is [Vagrant](https://developer.hashicorp.com/vagrant/downloads) installed on your machine, and then run the following command.
+
+> Make sure you are using `ProductionConfig` in the `__init__.py` script. (Can be done at any time)
+
+```bash
+$ cd PSIRT
+$ vagrant up --provider vmware_desktop
+```
+
+> If you are using VMware as your provider, make sure you have the [VMware Utility](https://developer.hashicorp.com/vagrant/docs/providers/vmware/vagrant-vmware-utility)
+
+Once Vagrant finishes installation, you will get an IP address displayed in the terminal. Open that IP in you browser.
+
+```bash
+<output_truncated>
+    default: Restarted supervisord
+    default: 192.168.64.134
+```
+
+> You can also deploy the app on [Virtualbox](https://www.virtualbox.org/). Run `vagrant up --provider virtualbox` instead
 
 ## Screenshots
 
@@ -206,7 +231,17 @@ $ docker run -d -p 80:80 --name psi psirt
 
 ## Considerations
 
-Some versions of Python _(such as 3.10.9 or later on Linux)_, may; or may not; `raise` an `ssl.SSLError: [SSL: UNSAFE_LEGACY_RENEGOTIATION_DISABLED] unsafe legacy renegotiation disabled (_ssl.c:1131)` exception. It's crucial to handle this error in a proper way since it is considered a critical security and audit breaks for a Man-in-the-Middle attack if handled incorrectly.
+Some versions of Python _(such as 3.10.x)_, may; or may not; `raise` an `ssl.SSLError: [SSL: UNSAFE_LEGACY_RENEGOTIATION_DISABLED] unsafe legacy renegotiation disabled (_ssl.c:1131)` exception. It's crucial to handle this error in a proper way since it is considered a critical security and audit breaks for a Man-in-the-Middle attack if handled incorrectly.
+
+You can carefully add the following line at the very bottom of `/etc/ssl/openssl.cnf`
+
+```bash
+[system_default_sect]
+CipherString = DEFAULT:@SECLEVEL=2
+Options = UnsafeLegacyRenegotiation # This line
+```
+
+> And restart the webserver. This change will be removed if openssl is upgraded. **Do it at your own risks!**
 
 ## Authors
 

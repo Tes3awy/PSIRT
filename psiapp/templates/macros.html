@@ -1,9 +1,7 @@
 {% macro render_pagination(pagination, start, end, total_count, prev_url, next_url) %}
 <div class="text-muted">
     {%- if pagination.prev != "NA" -%}
-    <a class="opacity-70 text-muted pagination-nav {% if pagination.prev == 'NA' -%}disabled{% endif %}"
-        href="{% if pagination.prev == 'NA' -%}{{ prev_url }}{% else %}javascript:{% endif %}" title="Previous page"
-        {% if pagination.prev == "NA" -%}disabled {% endif %}>
+    <a class="opacity-70 text-muted pagination-nav" href="{{ prev_url|replace(' ', '+') }}" title="Previous page">
         <span class="icon-step-prev"></span>
     </a>
     {%- endif -%}
@@ -11,9 +9,7 @@
         of total {{ total_count }}
         advisories ({{ tnp }} pages)</small>
     {%- if pagination.next != "NA" -%}
-    <a class="opacity-70 text-muted pagination-nav {% if pagination.next == 'NA' -%}disabled {% endif %}"
-        href="{% if pagination.next != 'NA' %}{{ next_url }}{% endif %}" title="Next page"
-        {% if pagination.next == "NA" -%}disabled {% endif %}>
+    <a class="opacity-70 text-muted pagination-nav" href="{{ next_url|replace(' ', '+') }}" title="Next page">
         <span class="icon-step-next"></span>
     </a>
     {%- endif -%}

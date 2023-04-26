@@ -72,6 +72,7 @@ def results(os_type: str):
         )
         total_count = paging.get("total_count")
         tnp = paging.get("tnp")  # total number of pages
+        print(tnp)
         start = paging.get("start")
         end = paging.get("end")
         prev_url = res.json().get("paging").get("prev")
@@ -80,7 +81,7 @@ def results(os_type: str):
         last_url = uri.format(os_type.lower(), version, tnp, pageSize)
         pagination = res.json().get("paging")
         flash(
-            f"{f'Page {pageIndex} of {tnp} - ' if pageIndex != tnp else ''}Search results for {os_type.upper()} {version}",
+            f"Page {pageIndex} of {tnp} - Search results for {os_type.upper()} {version}",
             "success",
         )
         return render_template(

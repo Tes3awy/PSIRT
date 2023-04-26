@@ -86,10 +86,7 @@ def results(date_sort: str):
         next_url = f"{res.json().get('paging').get('next')}&startDate={startDate}&endDate={endDate}"
         last_url = uri.format(date_sort, tnp, pageSize, startDate, endDate)
         pagination = res.json().get("paging")
-        flash(
-            f"{f'Page {pageIndex} of {tnp} - ' if pageIndex != tnp else ''}{title}",
-            "success",
-        )
+        flash(f"Page {pageIndex} of {tnp} - {title}", "success")
         return render_template(
             "dates/results.html",
             title=title,

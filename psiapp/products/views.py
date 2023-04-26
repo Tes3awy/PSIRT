@@ -32,6 +32,7 @@ def results():
     product = request.args.get("product", type=str)
     pageIndex = request.args.get("pageIndex", 1, type=int)
     pageSize = request.args.get("pageSize", 10, type=int)
+    title = f"Search results for {product}"
     uri = "product?product={}&pageIndex={}&pageSize={}"
     try:
         res = fetch_data(
@@ -75,13 +76,10 @@ def results():
         next_url = res.json().get("paging").get("next")
         last_url = uri.format(product, tnp, pageSize)
         pagination = res.json().get("paging")
-        flash(
-            f"{f'Page {pageIndex} of {tnp} - ' if pageIndex != tnp else ''}Search results for {product}",
-            "success",
-        )
+        flash(f"Page {pageIndex} of {tnp} - {title}", "success")
         return render_template(
             "product/results.html",
-            title=f"Search results for {product}",
+            title=title,
             advisories=advisories,
             product=product,
             pagination=pagination,

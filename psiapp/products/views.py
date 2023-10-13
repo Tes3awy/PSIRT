@@ -5,9 +5,9 @@ from markupsafe import escape
 from psiapp import limiter
 from psiapp.utils import fetch_data, paginate
 
-from . import bp
-from .forms import ProductSearchForm
-from .utils import fetch_products
+from psiapp.products import bp
+from psiapp.products.forms import ProductSearchForm
+from psiapp.products.utils import fetch_products
 
 
 # By Cisco Product Search Form Page

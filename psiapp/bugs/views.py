@@ -5,8 +5,8 @@ from markupsafe import escape
 from psiapp import limiter
 from psiapp.utils import fetch_data
 
-from . import bp
-from .forms import BugSearchForm
+from psiapp.bugs import bp
+from psiapp.bugs.forms import BugSearchForm
 
 
 # Cisco Bug ID Search Form Page

@@ -5,8 +5,8 @@ from markupsafe import escape
 from psiapp import limiter
 from psiapp.utils import fetch_data, paginate
 
-from . import bp
-from .forms import OSVersionSearchForm
+from psiapp.oses import bp
+from psiapp.oses.forms import OSVersionSearchForm
 
 
 # By OS-Version Search Form Page

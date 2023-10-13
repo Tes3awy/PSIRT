@@ -5,8 +5,8 @@ from markupsafe import escape
 from psiapp import limiter
 from psiapp.utils import fetch_data
 
-from . import bp
-from .forms import CVESearchForm
+from psiapp.cves import bp
+from psiapp.cves.forms import CVESearchForm
 
 
 # CVE Search Form Page

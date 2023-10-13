@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms.fields import SelectField, StringField
 from wtforms.validators import DataRequired
 
-from .enums import SelectOptions
+from psiapp.oses.enums import SelectOptions
 
 
 class OSVersionSearchForm(FlaskForm):

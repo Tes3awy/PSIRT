@@ -2,8 +2,8 @@ import requests
 from flask import current_app as app
 from flask import flash, redirect, render_template, session, url_for
 
-from . import bp
-from .utils import get_token
+from psiapp.main import bp
+from psiapp.main.utils import get_token
 
 
 # Home Page

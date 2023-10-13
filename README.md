@@ -57,7 +57,7 @@ On Mar 2, 2023, certain changes were made to the Cisco API console which will ma
 ### Frontend Components
 
 1. [Cisco UI Kit 2.0.5](https://www.cisco.com/web/fw/cisco-ui/2.0.5/dist/css/cui-standard.min.css)
-2. [jQuery 3.6.4](https://jquery.com/download/)
+2. [jQuery 3.7.1](https://jquery.com/download/)
 3. [ScrollReveal.js 4.0.9](https://scrollrevealjs.org/)
 4. [Select2.js 4.1.0-rc.0](https://select2.org/)
 
@@ -66,7 +66,7 @@ On Mar 2, 2023, certain changes were made to the Cisco API console which will ma
 Tested on:
 
 1. Windows 10/11 Pro
-2. Ubuntu Server - Jammy 22.04.2 LTS
+2. Ubuntu Server - Jammy 22.04.3 LTS
 
 ## Installation
 
@@ -155,7 +155,7 @@ Press CTRL+C to quit
 
 ```
 
-6. Open `localhost:8080` in your browser and you are ready to use the application.
+6. Open `localhost:8080/main` in your browser and you are ready to use the application.
 
 **To deploy PSI in a production environment**
 
@@ -181,7 +181,7 @@ $ docker build --progress=plain --no-cache -t psirt:latest .
 $ docker run -d -p 80:80 --name psi psirt
 ```
 
-2. Open `localhost:80` _(port 80 this time which is the default port for HTTP)_ in your browser and you are ready to use your production-ready dockerized application.
+2. Open `localhost:80/main` _(port 80 this time which is the default port for HTTP)_ in your browser and you are ready to use your production-ready dockerized application.
 
 ## Vagrant
 

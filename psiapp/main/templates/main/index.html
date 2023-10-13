@@ -18,7 +18,7 @@
     <div class="col-12">
         <div id="hero" role="banner">
             <h1 class="h1">PSI</h1>
-            <blockquote class="lead blockquote blockquote--tertiary">
+            <blockquote class="lead blockquote blockquote--primary">
                 Using a set of search forms, you can get all information of a CVE by its ID, or even get all CVEs of not
                 only IOS and IOS-XE, both NX-OS and NX-OS in ACI mode, but also ASA, FTD, FMC, and FXOS. You can also
                 search for security advisories for a specific Cisco Product.
@@ -35,7 +35,7 @@
             {{ description|safe }}
         </p>
         <div class="text-center" style="margin-top:auto;">
-            <a href="{{ url_for(uri) }}" class="btn btn--ghost btn--justified text-white" title="{{ title }}">Search
+            <a href="{{ url_for(uri) }}" class="btn btn--secondary btn--justified text-white" title="{{ title }}">
                 Form <span class="icon-small icon-search"></span>
             </a>
         </div>

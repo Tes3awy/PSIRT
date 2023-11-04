@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms.fields import SelectField
+from wtforms.fields import SelectField, SubmitField
 from wtforms.validators import DataRequired
 
 
@@ -10,3 +10,4 @@ class ProductSearchForm(FlaskForm):
         validators=[DataRequired()],
         render_kw={"class_": "max-width"},
     )
+    search = SubmitField()

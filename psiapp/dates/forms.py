@@ -1,7 +1,7 @@
 from datetime import date
 
 from flask_wtf import FlaskForm
-from wtforms.fields import DateField, SelectField
+from wtforms.fields import DateField, SelectField, SubmitField
 from wtforms.validators import DataRequired, StopValidation, ValidationError
 
 
@@ -30,6 +30,7 @@ class DateRangeSearchForm(FlaskForm):
         render_kw={"placeholder": "End Date"},
         format="%Y-%m-%d",
     )
+    search = SubmitField()
 
     def validate_end_date(self, end_date):
         if self.start_date.data is None:

@@ -1,7 +1,7 @@
 import re
 
 from flask_wtf import FlaskForm
-from wtforms.fields import StringField
+from wtforms.fields import StringField, SubmitField
 from wtforms.validators import DataRequired, Length, Regexp
 
 
@@ -23,3 +23,4 @@ class BugSearchForm(FlaskForm):
         ],
         render_kw={"placeholder": "Enter a Cisco Bug ID"},
     )
+    search = SubmitField()

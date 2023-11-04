@@ -14,7 +14,7 @@
     </a>
     {%- endif -%}
 </div>
-{% endmacro  %}
+{% endmacro %}
 
 {% macro render_prev_next(prev_url, next_url, first_url, last_url) %}
 <ul class="pagination pagination--rounded max-width justify-content-center base-margin-bottom">
@@ -41,4 +41,10 @@
 </span>
 {%- endfor -%}
 {%- endif -%}
+{% endmacro %}
+
+{% macro search_btn(field) %}
+<button type="submit" class="btn btn--primary" id="{{ field.id }}" name="{{ field.name }}">
+    <span class="icon-search half-padding-right"></span> {{- field.label.text -}}
+</button>
 {% endmacro %}

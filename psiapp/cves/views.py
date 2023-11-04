@@ -3,10 +3,9 @@ from flask import flash, redirect, render_template, request, session, url_for
 from markupsafe import escape
 
 from psiapp import limiter
-from psiapp.utils import fetch_data
-
 from psiapp.cves import bp
 from psiapp.cves.forms import CVESearchForm
+from psiapp.utils import fetch_data
 
 
 # CVE Search Form Page

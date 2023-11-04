@@ -3,11 +3,10 @@ from flask import flash, redirect, render_template, request, session, url_for
 from markupsafe import escape
 
 from psiapp import limiter
-from psiapp.utils import fetch_data, paginate
-
 from psiapp.products import bp
 from psiapp.products.forms import ProductSearchForm
 from psiapp.products.utils import fetch_products
+from psiapp.utils import fetch_data, paginate
 
 
 # By Cisco Product Search Form Page

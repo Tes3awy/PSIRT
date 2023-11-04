@@ -4,10 +4,9 @@ import requests
 from flask import flash, redirect, render_template, request, session, url_for
 
 from psiapp import limiter
-from psiapp.utils import fetch_data, paginate
-
 from psiapp.dates import bp
 from psiapp.dates.forms import DateRangeSearchForm
+from psiapp.utils import fetch_data, paginate
 
 
 # By Date Range Search Form Page

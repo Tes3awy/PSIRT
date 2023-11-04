@@ -3,10 +3,9 @@ from flask import flash, redirect, render_template, request, session, url_for
 from markupsafe import escape
 
 from psiapp import limiter
-from psiapp.utils import fetch_data, paginate
-
 from psiapp.oses import bp
 from psiapp.oses.forms import OSVersionSearchForm
+from psiapp.utils import fetch_data, paginate
 
 
 # By OS-Version Search Form Page
@@ -72,7 +71,6 @@ def results(os_type: str):
         )
         total_count = paging.get("total_count")
         tnp = paging.get("tnp")  # total number of pages
-        print(tnp)
         start = paging.get("start")
         end = paging.get("end")
         prev_url = res.json().get("paging").get("prev")

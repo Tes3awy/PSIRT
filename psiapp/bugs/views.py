@@ -3,10 +3,9 @@ from flask import flash, redirect, render_template, request, session, url_for
 from markupsafe import escape
 
 from psiapp import limiter
-from psiapp.utils import fetch_data
-
 from psiapp.bugs import bp
 from psiapp.bugs.forms import BugSearchForm
+from psiapp.utils import fetch_data
 
 
 # Cisco Bug ID Search Form Page

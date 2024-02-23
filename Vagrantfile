@@ -13,7 +13,7 @@ Vagrant.configure("2") do |config|
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
   config.vm.box = "bento/ubuntu-22.04"  # Bento is vagrant's recommended open-source boxes
-  config.vm.box_version = "202303.13.0" # Check the latest at https://app.vagrantup.com/bento/boxes/ubuntu-22.04
+  config.vm.box_version = "202401.31.0" # Check the latest at https://app.vagrantup.com/bento/boxes/ubuntu-22.04
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs

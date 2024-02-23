@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, timedelta
 
 from flask_wtf import FlaskForm
 from wtforms.fields import DateField, SelectField, SubmitField
@@ -16,7 +16,7 @@ class DateRangeSearchForm(FlaskForm):
         ],
         validators=[DataRequired()],
         default=["firstpublished"],
-        render_kw={"placeholder": "First Published", "class_": "focus"},
+        render_kw={"placeholder": "First Published"},
     )
     start_date = DateField(
         label="Start Date",
@@ -29,19 +29,20 @@ class DateRangeSearchForm(FlaskForm):
         validators=[DataRequired()],
         render_kw={"placeholder": "End Date"},
         format="%Y-%m-%d",
+        default=date.today() - timedelta(days=1),
     )
     search = SubmitField()
 
-    def validate_end_date(self, end_date):
-        if self.start_date.data is None:
-            self.start_date.errors = ["You must set start date"]
+    def validate_start_date(self, start_date):
+        if start_date.data is None:
+            start_date.errors = ["You must set the start date"]
             raise StopValidation()
 
-        if end_date.data is None:
+        if self.end_date.data is None:
             raise StopValidation("You must set end date")
 
-        if self.start_date.data > end_date.data:
+        if start_date.data > self.end_date.data:
             raise ValidationError("End Date must be greater than Start Date")
 
-        if end_date.data > date.today():
+        if self.end_date.data > date.today():
             raise ValidationError("Cannot get advisories of future dates")

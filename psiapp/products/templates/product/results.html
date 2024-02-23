@@ -2,19 +2,8 @@
 
 {%- block content -%}
 <div class="flex flex-center-vertical justify-content-between">
-    <nav aria-label="breadcrumb" role="navigation">
-        <ol class="breadcrumb">
-            <li>
-                <a class="link" href="{{ url_for('main.index') }}" title="Home">
-                    <span class="icon-home"></span>
-                </a>
-            </li>
-            <li>
-                <a class="link" href="{{ url_for('.product') }}" title="Products">Cisco Products</a>
-            </li>
-            <li class="active" aria-current="page">{{ product }}</li>
-        </ol>
-    </nav>
+    <!-- Breadcrumb -->
+    {{ breadcrumb('.product', "Cisco Products", product) }}
     <!-- Pagination -->
     {%- if tnp > 1 -%}
     {{ render_pagination(pagination, start, end, total_count, prev_url, next_url) }}

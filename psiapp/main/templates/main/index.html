@@ -7,9 +7,9 @@
 {%- set search_forms = [
     ('CVE ID', 'Get advisory by a CVE ID', 'cves.cve'), 
     ('Cisco Bug ID', 'Get advisory by a Cisco Bug ID', 'bugs.bug'),
-    ('OS-Version', 'Get list of advisories by searching an OS type &amp; its Version', 'oses.os'), 
-    ('Date Range', 'Get list of advisories by a date range sorted by first or last published', 'dates.dates_range'), 
-    ('Cisco Products', 'Get list of advisories for a specific Cisco product', 'products.product'), 
+    ('OS-Version', 'Get a list of advisories by searching an OS type &amp; its version', 'oses.os'), 
+    ('Date Range', 'Get a list of advisories by a date range sorted by first or last published', 'dates.dates_range'), 
+    ('Cisco Products', 'Get a list of advisories for a specific Cisco product', 'products.product'), 
 ] 
 -%}
 
@@ -36,7 +36,7 @@
         </p>
         <div class="text-center" style="margin-top:auto;">
             <a href="{{ url_for(uri) }}" class="btn btn--secondary btn--justified text-white" title="{{ title }}">
-                Form <span class="icon-small icon-search"></span>
+                <span class="icon-small icon-search"></span>
             </a>
         </div>
     </div>

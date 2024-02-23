@@ -5,8 +5,9 @@
         <span class="icon-step-prev"></span>
     </a>
     {%- endif -%}
-    <small class="opacity-70 text-muted qtr-margin-left qtr-padding-right">Showing {{ start }} &mdash; {{ end }}
-        of total {{ total_count }}
+    <small class="opacity-70 text-muted qtr-margin-left qtr-padding-right">Showing {{ "{:,}".format(start) }} &mdash;
+        {{ "{:,}".format(end) }}
+        of {{ "{:,}".format(total_count) }}
         advisories ({{ tnp }} pages)</small>
     {%- if pagination.next != "NA" -%}
     <a class="opacity-70 text-muted pagination-nav" href="{{ next_url|replace(' ', '+') }}" title="Next page">
@@ -47,4 +48,20 @@
 <button type="submit" class="btn btn--primary" id="{{ field.id }}" name="{{ field.name }}">
     <span class="icon-search half-padding-right"></span> {{- field.label.text -}}
 </button>
+{% endmacro %}
+
+{% macro breadcrumb(child, caption, title) %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li>
+            <a class="link" href="{{ url_for('main.index') }}"><span class="icon-home"></span></a>
+        </li>
+        {% if caption %}
+        <li>
+            <a class="link" href="{{ url_for(child) }}">{{ caption }}</a>
+        </li>
+        {% endif %}
+        <li class="active">{{ title }}</li>
+    </ol>
+</nav>
 {% endmacro %}

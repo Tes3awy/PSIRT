@@ -23,10 +23,10 @@ def product(title="Cisco Products"):
 
 
 # By Cisco Product Search Results Page
-@bp.route("", methods=["GET"])
+@bp.get("")
 def results():
     if not request.args.get("product", None, type=str):
-        flash("A Cisco product is required!", category="danger")
+        flash("A Cisco product is required!", "danger")
         return redirect(url_for(".product"))
     product = request.args.get("product", type=str)
     pageIndex = request.args.get("pageIndex", 1, type=int)
@@ -39,7 +39,7 @@ def results():
             access_token=session.get("access_token"),
         )
     except requests.exceptions.ConnectionError as e:
-        flash("Connection Error! Failed to establish a connection", category="danger")
+        flash("Connection Error! Failed to establish a connection", "danger")
         return redirect(url_for(".product"))
     except requests.exceptions.HTTPError as e:
         if e.response.status_code == 403:
@@ -49,32 +49,27 @@ def results():
             )
             return redirect(url_for("main.index"))
         if e.response.status_code in [404, 406]:
-            flash(
-                f"{e.response.json().get('errorCode')} - {e.response.json().get('errorMessage')}",
-                category="danger",
-            )
+            flash(e.response.json().get("errorMessage"), "danger")
             return redirect(url_for(".product"))
         if e.response.status_code == 503:
             flash(
                 "Service is currently unavailable from Cisco! Try again later", "danger"
             )
             return redirect(url_for(".product"))
-        flash(str(e), category="danger")
+        flash(str(e), "danger")
         return redirect(url_for(".product"))
     else:
         advisories = res.json().get("advisories")
-        paging = paginate(
-            paging=res.json().get("paging"), pageIndex=pageIndex, pageSize=pageSize
-        )
+        pagination = res.json().get("paging")
+        paging = paginate(paging=pagination, pageIndex=pageIndex, pageSize=pageSize)
         total_count = paging.get("total_count")
         tnp = paging.get("tnp")  # total number of pages
         start = paging.get("start")
         end = paging.get("end")
-        prev_url = res.json().get("paging").get("prev")
+        prev_url = pagination.get("prev")
         first_url = uri.format(product, 1, pageSize)
-        next_url = res.json().get("paging").get("next")
+        next_url = pagination.get("next")
         last_url = uri.format(product, tnp, pageSize)
-        pagination = res.json().get("paging")
         flash(f"Page {pageIndex} of {tnp} - {title}", "success")
         return render_template(
             "product/results.html",

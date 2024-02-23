@@ -2,20 +2,7 @@
 
 {%- block content -%}
 <div class="flex justify-content-between">
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li>
-                <a class="link" href="{{ url_for('main.index') }}" title="Home">
-                    <span class="icon-home"></span>
-                </a>
-            </li>
-            <li>
-                <a class="link" href="{{ url_for('.os') }}" title="OS-Version">OS-Version</a>
-            </li>
-            <li>{{ os_type|upper }}</li>
-            <li class="active" aria-current="page">{{ version }}</li>
-        </ol>
-    </nav>
+    {{ breadcrumb('.os', os_type|upper, version) }}
     <!-- Pagination -->
     {%- if tnp > 1 -%}
     {{ render_pagination(pagination, start, end, total_count, prev_url, next_url) }}
@@ -56,15 +43,16 @@
             <h3 class="h3">Actions</h3>
             <p class="summary">
                 {%- if os not in ['ios', 'iosxe'] -%}
-                You are encourged to determine if the vulnerability is affecting your network, and if so, download an
-                {{ os|upper }} version that patches this vulnerability and make an upgrade plan according to fixed
-                release(s) before performing the upgrade. Fixed releases are not listed here but is available on <a
-                    class="text-info" href="{{ advisory.publicationUrl }}#fixedsoftfield" target="_blank"
-                    rel="noopener noreferrer" title="{{ advisory.advisoryId }}">{{ advisory.advisoryId }}</a>
+                You are encourged to determine if the vulnerability is affecting your network, and if so, download a
+                {{ os|upper }} version that patches this vulnerability and plan an upgrade maintenance window according
+                to fixed release. {% if not advisory.firstFixed|length %} Fixed releases are not listed
+                here but is available on <a class="text-info" href="{{ advisory.publicationUrl }}#fixedsoftfield"
+                    target="_blank" rel="noopener noreferrer"
+                    title="{{ advisory.advisoryId }}">{{ advisory.advisoryId }}</a>{% endif %}
                 {%- else -%}
-                You are encourged to determine if the vulnerability is affecting your network, and if so, download an
-                {{ os|upper }} version that patches this vulnerability and is a resilient version. Make an upgrade
-                plan according to fixed release(s) before performing the upgrade.
+                You are encourged to determine if the vulnerability is affecting your network, and if so, download a
+                {{ os|upper }} version which patches this vulnerability that is a resilient version. Plan an upgrade
+                maintenance window according to fixed release.
                 {%- endif -%}
             </p>
         </div>
@@ -166,20 +154,34 @@
         {%- endif -%}
 
         {%- if advisory.bugIDs[0] != "NA" -%}
-        <h3 class="related-bugs">Related Bug ID{%- if advisory.bugIDs|length > 1 -%}s{%- endif -%}</h3>
-        <ul>
-            {%- for bug_id in advisory.bugIDs -%}
-            <li class="bug-item">
-                <a class="qtr-padding-right" href="{{ url_for('bugs.result', bug_id=bug_id) }}"
-                    title="{{ bug_id }}">{{ bug_id }}</a>
-                <a class="label label--dark label--small text-white"
-                    href="//bst.cloudapps.cisco.com/bugsearch/bug/{{ bug_id }}" target="_blank"
-                    rel="noopener noreferrer" title="{{ bug_id }} on Cisco Bug Search Tool">BST <span
-                        class="icon-jump-out icon-size-10 qtr-padding-left"></span></a>
-            </li>
-            {%- endfor -%}
-        </ul>
+        <div class="base-margin-bottom">
+            <h3 class="related-bugs">Related Bug ID{%- if advisory.bugIDs|length > 1 -%}s{%- endif -%}</h3>
+            <ul>
+                {%- for bug_id in advisory.bugIDs -%}
+                <li class="bug-item">
+                    <a class="qtr-padding-right" href="{{ url_for('bugs.result', bug_id=bug_id) }}"
+                        title="{{ bug_id }}">{{ bug_id }}</a>
+                    <a class="label label--dark label--small text-white"
+                        href="//bst.cloudapps.cisco.com/bugsearch/bug/{{ bug_id }}" target="_blank"
+                        rel="noopener noreferrer" title="{{ bug_id }} on Cisco Bug Search Tool">BST <span
+                            class="icon-jump-out icon-size-10 qtr-padding-left"></span></a>
+                </li>
+                {%- endfor -%}
+            </ul>
+        </div>
         {%- endif -%}
+
+        {% if advisory.smu and advisory.smu != "NA" %}
+        <h3 class="related-smu">SMU</h3>
+        <ul>
+            <li class="smu-item">
+                <a class="qtr-padding-right" href="{{ advisory.smu }}" title="{{ advisory.smu }}"
+                    target="_blank">{{ advisory.smu }} <span class="icon-jump-out icon-size-10 qtr-padding-left"></span>
+                </a>
+            </li>
+        </ul>
+        {% else %}
+        {% endif %}
     </div>
 </div>
 <hr />

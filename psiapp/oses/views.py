@@ -23,10 +23,10 @@ def os(title="Search by OS-Version"):
 
 
 # By OS-Version Search Results Page
-@bp.route("/<string:os_type>", methods=["GET"])
+@bp.get("/<string:os_type>")
 def results(os_type: str):
     if not request.args.get("version", None, type=str):
-        flash("An OS version is required!", category="danger")
+        flash("An OS version is required!", "danger")
         return redirect(url_for(".os"))
     pageIndex = request.args.get("pageIndex", 1, int)
     pageSize = request.args.get("pageSize", 10, int)
@@ -39,28 +39,25 @@ def results(os_type: str):
             access_token=session.get("access_token"),
         )
     except requests.exceptions.ConnectionError as e:
-        flash("Connection Error! Failed to establish a connection", category="danger")
+        flash("Connection Error! Failed to establish a connection", "danger")
         return redirect(url_for(".os"))
     except requests.exceptions.HTTPError as e:
         if e.response.status_code == 403:
             flash(
-                "Session has expired! You are redirected here to refresh your session",
-                category="info",
+                "Session has expired! You are redirected to the Home page to refresh your session",
+                "info",
             )
             return redirect(url_for("main.index"))
         if e.response.status_code in [404, 406]:
-            flash(
-                f"{e.response.json().get('errorCode')} - {e.response.json().get('errorMessage')}",
-                category="warning" if e.response.status_code == 404 else "danger",
-            )
+            flash(e.response.json().get("errorMessage"), "danger")
             return redirect(url_for(".os"))
         if e.response.status_code == 503:
             flash(
                 "Service is currently unavailable from Cisco! Please try again later",
-                category="danger",
+                "danger",
             )
             return redirect(url_for(".os"))
-        flash(str(e), category="danger")
+        flash(str(e), "danger")
         return redirect(url_for(".os"))
     else:
         advisories = res.json().get("advisories")

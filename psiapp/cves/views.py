@@ -15,16 +15,16 @@ def cve(title="CVE ID"):
     form = CVESearchForm()
     if form.validate_on_submit():
         cve_id = escape(form.cve_id.data.strip().upper())
-        return redirect(url_for("cves.result", cve_id=cve_id))
+        return redirect(url_for(".result", cve_id=cve_id))
     return render_template("cve/form.html", title=title, form=form)
 
 
 # CVE Search Results Page
-@bp.route("/result", methods=["GET"])
+@bp.get("/result")
 def result():
     if not request.args.get("cve_id", None, type=str):
-        flash("A Cisco CVE ID is required!", category="danger")
-        return redirect(url_for("cves.cve"))
+        flash("A Cisco CVE ID is required!", "danger")
+        return redirect(url_for(".cve"))
     cve_id = escape(request.args.get("cve_id").strip().upper())
     try:
         res = fetch_data(
@@ -32,23 +32,23 @@ def result():
             access_token=session.get("access_token"),
         )
     except requests.exceptions.ConnectionError as e:
-        flash("Connection Error! Failed to establish a connection", category="danger")
-        return redirect(url_for("cves.cve"))
+        flash("Connection Error! Failed to establish a connection", "danger")
+        return redirect(url_for(".cve"))
     except requests.exceptions.HTTPError as e:
         if e.response.status_code == 403:
             flash(
-                "Session has expired! You are redirected here to refresh your session",
+                "Session has expired! You are redirected to the Home page to refresh your session",
                 "info",
             )
             return redirect(url_for("main.index"))
         if e.response.status_code == 404:
-            flash(f"No result found matching {cve_id}! Check typos", "warning")
-            return redirect(url_for("cves.cve"))
+            flash(e.response.json().get("errorMessage"), "danger")
+            return redirect(url_for(".cve"))
         if e.response.status_code == 406:
             flash(f"Unacceptable format of CVE ID {cve_id}!", "danger")
-            return redirect(url_for("cves.cve"))
-        flash(str(e), category="danger")
-        return redirect(url_for("cves.cve"))
+            return redirect(url_for(".cve"))
+        flash(str(e), "danger")
+        return redirect(url_for(".cve"))
     else:
         flash(f"Search result for {cve_id}", "success")
         advisories = res.json().get("advisories")

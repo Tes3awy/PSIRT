@@ -20,7 +20,7 @@ def dates_range(title="Search by date range"):
         endDate = form.end_date.data
         return redirect(
             url_for(
-                "dates.results",
+                ".results",
                 date_sort=date_sort,
                 startDate=startDate,
                 endDate=endDate,
@@ -46,28 +46,25 @@ def results(date_sort: str):
             access_token=session.get("access_token"),
         )
     except requests.exceptions.ConnectionError as e:
-        flash("Connection Error! Failed to establish a connection", category="danger")
+        flash("Connection Error! Failed to establish a connection", "danger")
         return redirect(url_for(".dates_range"))
     except requests.exceptions.HTTPError as e:
         if e.response.status_code == 403:
             flash(
-                "Session has expired! You are redirected here to refresh your session",
-                category="info",
+                "Session has expired! You are redirected to the Home page to refresh your session",
+                "info",
             )
             return redirect(url_for("main.index"))
         if e.response.status_code in [404, 406]:
-            flash(
-                f"{e.response.json().get('errorCode')} - {e.response.json().get('errorMessage')}",
-                category="warning" if e.response.status_code == 404 else "danger",
-            )
+            flash(e.response.json().get("errorMessage"), "danger")
             return redirect(url_for(".dates_range"))
         if e.response.status_code == 503:
             flash(
                 "Service is currently unavailable from Cisco! Please try again later",
-                category="danger",
+                "danger",
             )
             return redirect(url_for(".dates_range"))
-        flash(str(e), category="danger")
+        flash(str(e), "danger")
         return redirect(url_for(".dates_range"))
     else:
         advisories = res.json().get("advisories")

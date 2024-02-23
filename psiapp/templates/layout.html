@@ -1,4 +1,4 @@
-{% from "macros.html" import render_pagination, render_prev_next, with_errors, search_btn with context %}
+{% from "macros.html" import render_pagination, render_prev_next, with_errors, search_btn, breadcrumb with context %}
 <!DOCTYPE html>
 <html lang="en-US">
 
@@ -22,9 +22,9 @@
         <meta name="rating" content="safe for kids" />
         <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.png') }}" type="image/png" />
         <!-- CSS -->
-        {%- block css -%}{%- endblock css -%}
         <link rel="stylesheet" href="{{ url_for('static', filename='css/cui-standard.min.css') }}" type="text/css" />
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.min.css') }}" type="text/css" />
+        {%- block css -%}{%- endblock css -%}
         <!-- JS -->
         {%- block jshead -%}{% endblock jshead %}
     </head>

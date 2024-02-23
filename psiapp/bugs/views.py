@@ -15,16 +15,16 @@ def bug(title="Bug ID"):
     form = BugSearchForm()
     if form.validate_on_submit():
         bug_id = form.bug_id.data.strip()
-        return redirect(url_for("bugs.result", bug_id=bug_id))
+        return redirect(url_for(".result", bug_id=bug_id))
     return render_template("bug/form.html", title=title, form=form)
 
 
 # Cisco Bug ID Result Page
-@bp.route("/result", methods=["GET"])
+@bp.get("/result")
 def result():
     if not request.args.get("bug_id", None, type=str):
-        flash("A Cisco bug ID is required!", category="danger")
-        return redirect(url_for("bugs.bug"))
+        flash("A Cisco bug ID is required!", "danger")
+        return redirect(url_for(".bug"))
     bug_id = escape(request.args.get("bug_id").strip())
     try:
         res = fetch_data(
@@ -32,30 +32,27 @@ def result():
             access_token=session.get("access_token"),
         )
     except requests.exceptions.ConnectionError as e:
-        flash("Connection Error! Failed to establish a connection", category="danger")
-        return redirect(url_for("bugs.bug"))
+        flash("Connection Error! Failed to establish a connection", "danger")
+        return redirect(url_for(".bug"))
     except requests.exceptions.HTTPError as e:
         if e.response.status_code == 403:
             flash(
-                "Session has expired! You are redirected here to refresh your session",
+                "Session has expired! You are redirected to the Home page to refresh your session",
                 "info",
             )
             return redirect(url_for("main.index"))
         if e.response.status_code == 404:
-            flash(
-                f"{e.response.json().get('errorCode')} - {e.response.json().get('errorMessage')} for {bug_id}. Go to <a class='link' href='//bst.cloudapps.cisco.com/bugsearch/bug/{bug_id}' target='_blank' rel='noopener noreferrer'>https://bst.cloudapps.cisco.com/bugsearch/bug/{bug_id}</a>",
-                category="warning",
-            )
-            return redirect(url_for("bugs.bug"))
+            flash(e.response.json().get("errorMessage"), "danger")
+            return redirect(url_for(".bug"))
         if e.response.status_code == 503:
             flash(
                 "The service is currently unavailable from Cisco! Please try again later",
-                category="danger",
+                "danger",
             )
-            return redirect(url_for("bugs.bug"))
-        flash(str(e), category="danger")
-        return redirect(url_for("bugs.bug"))
+            return redirect(url_for(".bug"))
+        flash(str(e), "danger")
+        return redirect(url_for(".bug"))
     else:
-        flash(f"Search result for {bug_id}", category="success")
+        flash(f"Search result for {bug_id}", "success")
         advisories = res.json().get("advisories")
         return render_template("bug/result.html", title=bug_id, bug=advisories)

@@ -1,5 +1,4 @@
-<div
-    class="col-{%- if advisory.csafUrl == 'NA' and advisory.cvrfUrl == 'NA' -%}12{%- elif advisory.csafUrl == 'NA' or advisory.cvrfUrl == 'NA' -%}7{%- else -%}6{%- endif -%}">
+<div class="col-6">
     {%- if advisory.sir in ["Critical", "High"] -%}
     <span class="qtr-margin-right text-bold label label--small label--danger">{{ advisory.sir }}</span>
     {%- elif advisory.sir == "Medium" -%}

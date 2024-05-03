@@ -231,9 +231,10 @@ Once Vagrant finishes installation, you will get an IP address displayed in the 
 
 ## Considerations
 
-Some versions of Python _(such as 3.10.x)_, may; or may not; `raise` an `ssl.SSLError: [SSL: UNSAFE_LEGACY_RENEGOTIATION_DISABLED] unsafe legacy renegotiation disabled (_ssl.c:1131)` exception. It's crucial to handle this error in a proper way since it is considered a critical security and audit breaks for a Man-in-the-Middle attack if handled incorrectly.
+> [!IMPORTANT]
+> Some versions of Python _(such as 3.10.x)_, may; or may not; `raise` an `ssl.SSLError: [SSL: UNSAFE_LEGACY_RENEGOTIATION_DISABLED] unsafe legacy renegotiation disabled (_ssl.c:1131)` exception. It's crucial to handle this error in a proper way since it is considered a critical security and audit breaks for a Man-in-the-Middle attack if handled incorrectly.
 
-You can carefully add the following line at the very bottom of `/etc/ssl/openssl.cnf`
+> You can carefully add the following line at the very bottom of `/etc/ssl/openssl.cnf`
 
 ```bash
 [system_default_sect]

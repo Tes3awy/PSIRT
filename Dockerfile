@@ -21,7 +21,7 @@ ENV PATH=$PATH:/home/psiuser/.local/bin
 # Install libraries
 RUN pip install --user -U pip
 RUN pip install --user --no-cache-dir -r requirements.txt
-RUN pip install --user --no-cache-dir gunicorn Flask-Limiter[redis]==3.5.1
+RUN pip install --user --no-cache-dir gunicorn Flask-Limiter[redis]==3.6.0
 
 # Expose port 80 for gunicorn
 EXPOSE 80/tcp

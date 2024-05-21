@@ -2,6 +2,6 @@ Flask==3.0.3
 Flask-WTF==1.2.1
 Flask-Compress==1.15
 Flask-HTMLmin==2.2.1
-requests==2.31.0
+requests==2.32.0
 requests-oauthlib==2.0.0
 python-dotenv==1.0.1
